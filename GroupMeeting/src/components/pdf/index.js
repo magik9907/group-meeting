@@ -1,4 +1,5 @@
 import { jsPDF } from 'jspdf'
+import QRCode from 'qrcode'
 
 class PDFTicket {
   width = 842
@@ -41,6 +42,17 @@ class PDFTicket {
     this.doc.text(text, width, height, options)
   }
 
+  QRCode() {
+    let s
+    QRCode.toDataURL('http://www.google.com', function (err, string) {
+      if (err) throw err
+      s = string
+      console.log(string)
+    })
+    console.log(s)
+    this.doc.addImage(s, this.width / 2 - 50, this.height - 150, 100, 100)
+  }
+
   Create() {
     var centerHorizontal = this.width / 2
     this.Circle(this.width, this.height, this.green)
@@ -67,12 +79,9 @@ class PDFTicket {
       this.darkblue
     )
 
-    this.Text(
-      'w dniu: 25.04.2020 14:00',
-      25,
-      centerHorizontal,
-      400,      
-    )
+    this.Text('w dniu: 25.04.2020 14:00', 25, centerHorizontal, 400)
+
+    this.QRCode()
 
     this.doc.output('dataurlnewwindow', { filename: 'Ticket' })
   }
