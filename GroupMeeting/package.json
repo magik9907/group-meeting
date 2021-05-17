@@ -26,6 +26,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "jspdf": "^2.3.1",
     "normalize.css": "^8.0.1",
     "sass-mq": "^5.0.1"
   }
