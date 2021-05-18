@@ -135,7 +135,8 @@ class PDFTicket {
   green = [80, 246, 42];
   darkblue = [25, 0, 168];
 
-  constructor() {
+  constructor(data) {
+    this.Data = data;
     this.doc = new jspdf__WEBPACK_IMPORTED_MODULE_0__.jsPDF({
       format: [this.width, this.height],
       title: 'Ticket',
@@ -168,9 +169,7 @@ class PDFTicket {
     qrcode__WEBPACK_IMPORTED_MODULE_1__.toDataURL('http://www.google.com', function (err, string) {
       if (err) throw err;
       s = string;
-      console.log(string);
     });
-    console.log(s);
     this.doc.addImage(s, this.width / 2 - 50, this.height - 150, 100, 100);
   }
 
@@ -180,13 +179,13 @@ class PDFTicket {
     this.Circle(this.width, 0, this.aqua);
     this.Text('Bilet', 30, centerHorizontal, 50);
     this.Text('dla Pan/Pani', 25, centerHorizontal, 90);
-    this.Text('Agnieszka Radwańska', 30, centerHorizontal, 150, undefined, ['Montserrat-Bold', 'normal'], [255, 255, 255]);
+    this.Text(this.Data.Name, 30, centerHorizontal, 150, undefined, ['Montserrat-Bold', 'normal'], [255, 255, 255]);
     this.Text('na', 25, centerHorizontal, 200);
-    this.Text('Spotkanie JS developerów ddddddddddddddddddddddddz pasją nauki tej sztuki', 30, centerHorizontal, 250, {
+    this.Text(this.Data.MeetingName, 30, centerHorizontal, 250, {
       align: 'center',
       maxWidth: this.width * 0.9
     }, ['Montserrat-Bold', 'normal'], this.darkblue);
-    this.Text('w dniu: 25.04.2020 14:00', 25, centerHorizontal, 400);
+    this.Text(`w dniu: ${this.Data.Date}`, 25, centerHorizontal, 400);
     this.QRCode();
     this.doc.output('dataurlnewwindow', {
       filename: 'Ticket'
@@ -195,9 +194,12 @@ class PDFTicket {
 
 }
 
-document.querySelector('#GeneratePdfButton').addEventListener('click', () => {
-  const pdf = new PDFTicket();
-  pdf.Create();
+document.querySelector('#GeneratePdfButton').addEventListener('click', event => {
+  const id = event.target.dataset['id'];
+  fetch(`${location.protocol}//${location.host}/api/ticket/${id}`).then(response => response.json()).then(data => {
+    const pdf = new PDFTicket(data);
+    pdf.Create();
+  });
 });
 
 /***/ }),

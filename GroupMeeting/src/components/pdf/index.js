@@ -7,7 +7,9 @@ class PDFTicket {
   aqua = [30, 143, 235]
   green = [80, 246, 42]
   darkblue = [25, 0, 168]
-  constructor() {
+
+  constructor(data) {
+    this.Data = data;
     this.doc = new jsPDF({
       format: [this.width, this.height],
       title: 'Ticket',
@@ -15,6 +17,7 @@ class PDFTicket {
       orientation: 'l',
     })
   }
+
   Circle(width, height, color) {
     let x = width / 2
     let y = height
@@ -47,9 +50,7 @@ class PDFTicket {
     QRCode.toDataURL('http://www.google.com', function (err, string) {
       if (err) throw err
       s = string
-      console.log(string)
     })
-    console.log(s)
     this.doc.addImage(s, this.width / 2 - 50, this.height - 150, 100, 100)
   }
 
@@ -60,7 +61,7 @@ class PDFTicket {
     this.Text('Bilet', 30, centerHorizontal, 50)
     this.Text('dla Pan/Pani', 25, centerHorizontal, 90)
     this.Text(
-      'Agnieszka Radwańska',
+      this.Data.Name,
       30,
       centerHorizontal,
       150,
@@ -70,7 +71,7 @@ class PDFTicket {
     )
     this.Text('na', 25, centerHorizontal, 200)
     this.Text(
-      'Spotkanie JS developerów ddddddddddddddddddddddddz pasją nauki tej sztuki',
+      this.Data.MeetingName,
       30,
       centerHorizontal,
       250,
@@ -79,7 +80,7 @@ class PDFTicket {
       this.darkblue
     )
 
-    this.Text('w dniu: 25.04.2020 14:00', 25, centerHorizontal, 400)
+    this.Text(`w dniu: ${this.Data.Date}`, 25, centerHorizontal, 400)
 
     this.QRCode()
 
@@ -87,7 +88,14 @@ class PDFTicket {
   }
 }
 
-document.querySelector('#GeneratePdfButton').addEventListener('click', () => {
-  const pdf = new PDFTicket()
-  pdf.Create()
-})
+document
+  .querySelector('#GeneratePdfButton')
+  .addEventListener('click', (event) => {
+    const id = event.target.dataset['id']
+    fetch(`${location.protocol}//${location.host}/api/ticket/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const pdf = new PDFTicket(data)
+        pdf.Create()
+      })
+  })
