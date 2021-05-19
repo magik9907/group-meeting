@@ -52,7 +52,7 @@ namespace GroupMeeting.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [DataType(DataType.Text), MaxLength(50)]
-            [Display(Name = "First name")]
+            [Display(Name = "User Name")]
             public string UserName { get; set; }
 
             [DataType(DataType.Text), MaxLength(50)]
@@ -87,7 +87,7 @@ namespace GroupMeeting.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.UserName, Name = Input.Name, Surname = Input.Surname, Email = Input.Email };
+                var user = new User { UserName = Input.UserName, FirstName = Input.Name, Surname = Input.Surname, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

@@ -10,7 +10,7 @@ namespace GroupMeeting.Areas.Identity.Data
     public class User : IdentityUser
     {
         [PersonalData, MaxLength(50)]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
         [PersonalData, MaxLength(50)]
         public string Surname { get; set; }
     }

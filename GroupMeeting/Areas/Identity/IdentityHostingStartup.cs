@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using GroupMeeting.Areas.Identity.Data;
 
 [assembly: HostingStartup(typeof(GroupMeeting.Areas.Identity.IdentityHostingStartup))]
 namespace GroupMeeting.Areas.Identity
@@ -19,7 +20,7 @@ namespace GroupMeeting.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("GroupMeetingContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<GroupMeetingContext>();
             });
         }

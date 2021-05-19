@@ -53,7 +53,7 @@ namespace GroupMeeting.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                Name = user.Name,
+                Name = user.FirstName,
                 Surname = user.Surname,
                 PhoneNumber = phoneNumber
             };
@@ -96,9 +96,9 @@ namespace GroupMeeting.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (Input.Name != user.Name)
+            if (Input.Name != user.FirstName)
             {
-                user.Name = Input.Name;
+                user.FirstName = Input.Name;
             }
 
             if (Input.Surname != user.Surname)
