@@ -4,11 +4,15 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GroupMeeting.Areas.Identity.Data;
+using GroupMeeting.Services;
 
 namespace GroupMeeting
 {
@@ -25,6 +29,8 @@ namespace GroupMeeting
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

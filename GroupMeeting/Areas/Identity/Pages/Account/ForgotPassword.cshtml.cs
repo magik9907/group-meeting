@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using GroupMeeting.Areas.Identity.Data;
+using GroupMeeting.Services;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace GroupMeeting.Areas.Identity.Pages.Account
 {
@@ -18,9 +21,9 @@ namespace GroupMeeting.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<User> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly EmailSender _emailSender;
 
-        public ForgotPasswordModel(UserManager<User> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<User> userManager, EmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
