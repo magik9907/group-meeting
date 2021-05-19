@@ -15,12 +15,17 @@ namespace GroupMeeting.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
+            builder.ConfigureServices((context, services) =>
+            {
                 services.AddDbContext<GroupMeetingContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("GroupMeetingContextConnection")));
 
-                services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<User>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = true;
+                    options.User.RequireUniqueEmail = true;
+                })
                     .AddEntityFrameworkStores<GroupMeetingContext>();
             });
         }
