@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using GroupMeeting.Areas.Identity.Data;
 
 namespace GroupMeeting.Data
 {
-    public class GroupMeetingContext : IdentityDbContext<IdentityUser>
+    public class GroupMeetingContext : IdentityDbContext<User>
     {
         public GroupMeetingContext(DbContextOptions<GroupMeetingContext> options)
             : base(options)
