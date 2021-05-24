@@ -24,11 +24,9 @@ namespace GroupMeeting.Pages
             _emailSender = emailSender;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public void OnGet()
         {
-            await _emailSender.SendEmailAsync("kamilewski@yahoo.com", "wat", "t");
 
-            return Page();
         }
     }
 }
