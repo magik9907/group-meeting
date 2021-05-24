@@ -20,8 +20,8 @@ namespace GroupMeeting.Areas.Identity
                 services.AddDbContext<GroupMeetingContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("GroupMeetingContextConnection")));
-
-                services.AddDefaultIdentity<User>(options =>
+                
+                services.AddDefaultIdentity<ApplicationUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
                     options.User.RequireUniqueEmail = true;

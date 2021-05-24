@@ -1,0 +1,44 @@
+﻿@page
+@model GroupMeeting.Areas.GroupCategories.Pages.Category.IndexModel
+@{
+    ViewData["Title"] = "Category";
+}
+<h1>Category List</h1>
+
+<form method="post" asp-page-handler="Create">
+    <label asp-for="NewCategory.Name" class="control-label"></label>
+    <input asp-for="NewCategory.Name" class="form-control" />
+    <span asp-validation-for="NewCategory.Name" class="text-danger"></span>
+    <button type-"submit">Submit</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Categories[0].Name)
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+    </thead>    
+    <tbody>
+        @if (Model.Categories != null)
+            @foreach (var item in Model.Categories)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @if(item.UserId == Model.Id) { 
+                       <form  asp-page-handler="Remove" asp-route-Id="@item.Id">
+                           <button type="submit">Delete</button>
+                       </form>
+                       }
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>
