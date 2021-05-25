@@ -13,6 +13,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using GroupMeeting.Areas.Identity.Data;
 using GroupMeeting.Services;
+using GroupMeeting.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.EntityFrameworkCore;
 
 namespace GroupMeeting
 {

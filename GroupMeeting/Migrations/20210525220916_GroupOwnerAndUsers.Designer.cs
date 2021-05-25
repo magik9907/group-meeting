@@ -4,43 +4,22 @@ using GroupMeeting.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupMeeting.Migrations
 {
     [DbContext(typeof(GroupMeetingContext))]
-    partial class GroupMeetingContextModelSnapshot : ModelSnapshot
+    [Migration("20210525220916_GroupOwnerAndUsers")]
+    partial class GroupOwnerAndUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("GroupMeeting.Areas.GroupCategories.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Categories");
-                });
 
             modelBuilder.Entity("GroupMeeting.Areas.Identity.Data.User", b =>
                 {
@@ -343,11 +322,6 @@ namespace GroupMeeting.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("GroupMeeting.Areas.GroupCategories.Models.Category", b =>
-                {
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", "User")
-                        .WithMany("Categories")
-                        .HasForeignKey("UserId")
             modelBuilder.Entity("GroupMeeting.Models.Group", b =>
                 {
                     b.HasOne("GroupMeeting.Areas.Identity.Data.User", "Owner")
