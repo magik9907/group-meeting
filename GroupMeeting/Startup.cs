@@ -13,6 +13,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using GroupMeeting.Areas.Identity.Data;
 using GroupMeeting.Services;
+using GroupMeeting.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.EntityFrameworkCore;
 
 namespace GroupMeeting
 {
@@ -31,6 +35,16 @@ namespace GroupMeeting
             services.AddRazorPages();
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddDbContext<GroupMeetingContext>(options =>
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("GroupMeetingContextConnection")));
+
+            services.AddDefaultIdentity<User>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<GroupMeetingContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

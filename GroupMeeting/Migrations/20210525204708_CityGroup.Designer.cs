@@ -4,14 +4,16 @@ using GroupMeeting.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupMeeting.Migrations
 {
     [DbContext(typeof(GroupMeetingContext))]
-    partial class GroupMeetingContextModelSnapshot : ModelSnapshot
+    [Migration("20210525204708_CityGroup")]
+    partial class CityGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,12 +126,7 @@ namespace GroupMeeting.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("OwnerID")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("OwnerID");
 
                     b.ToTable("Groups");
                 });
@@ -147,42 +144,6 @@ namespace GroupMeeting.Migrations
                     b.HasIndex("CityID");
 
                     b.ToTable("GroupCity");
-                });
-
-            modelBuilder.Entity("GroupMeeting.Models.GroupOwner", b =>
-                {
-                    b.Property<int>("GroupID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OwnerID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("GroupID", "OwnerID");
-
-                    b.HasIndex("OwnerID")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("GroupOwner");
-                });
-
-            modelBuilder.Entity("GroupMeeting.Models.GroupUser", b =>
-                {
-                    b.Property<int>("GroupID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("GroupID", "UserID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("GroupUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -320,58 +281,17 @@ namespace GroupMeeting.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("GroupMeeting.Models.Group", b =>
-                {
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerID");
-                });
-
             modelBuilder.Entity("GroupMeeting.Models.GroupCity", b =>
                 {
-                    b.HasOne("GroupMeeting.Models.City", "City")
+                    b.HasOne("GroupMeeting.Models.Group", "Group")
                         .WithMany("GroupCities")
                         .HasForeignKey("CityID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GroupMeeting.Models.Group", "Group")
+                    b.HasOne("GroupMeeting.Models.City", "City")
                         .WithMany("GroupCities")
                         .HasForeignKey("GroupID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GroupMeeting.Models.GroupOwner", b =>
-                {
-                    b.HasOne("GroupMeeting.Models.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", "Owner")
-                        .WithOne()
-                        .HasForeignKey("GroupMeeting.Models.GroupOwner", "OwnerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
-                        .WithMany("GroupOwners")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("GroupMeeting.Models.GroupUser", b =>
-                {
-                    b.HasOne("GroupMeeting.Models.Group", "Group")
-                        .WithMany("GroupUsers")
-                        .HasForeignKey("GroupID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", "User")
-                        .WithMany("GroupUsers")
-                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
