@@ -10,7 +10,7 @@ namespace GroupMeeting.Areas.GroupCategories.Models
 {
     public class Category
     {
-        
+
         public int Id { get; set; }
         [StringLength(100)]
         //[Column(TypeName = "VARCHAR")]
@@ -19,5 +19,6 @@ namespace GroupMeeting.Areas.GroupCategories.Models
         [Required]
         public string UserId { get; set; }
         public User User { get; set; }
+        public IList<GroupCategory> GroupCategories { get; set; }
     }
 }

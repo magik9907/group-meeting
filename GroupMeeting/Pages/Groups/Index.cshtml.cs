@@ -36,7 +36,11 @@ namespace GroupMeeting
                 Group = await _context.Groups
                     .Include(a => a.Owner).ToListAsync();
             else
-                Group = await _context.Groups.Where(e =>e.Name == name).ToListAsync();
+            {
+                Group = await _context.Groups.Where(e => e.Name == name).ToListAsync();
+
+                GroupName = new SearchGroup() { Name = name };
+            }
         }
 
         public IActionResult OnPostSearch()

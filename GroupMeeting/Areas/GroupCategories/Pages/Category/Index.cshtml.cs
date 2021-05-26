@@ -34,16 +34,23 @@ namespace GroupMeeting.Areas.GroupCategories.Pages.Category
         }
 
 
-        public  void OnGet()
+        public void OnGet()
         {
-            Id = (_userManager.GetUserId(this.User));
-            Categories = _context.Categories.OrderBy(e =>e.UserId).ToList<Models.Category>();
+            Id = _userManager.GetUserId(this.User);
+            Categories = _context.Categories.OrderBy(e => e.UserId).ToList<Models.Category>();
         }
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
+            string name = NewCategory.Name.ToLower();
             var user = await _userManager.GetUserAsync(this.User);
-            if (!ModelState.IsValid || user == null) return Page();
+            if (_context.Categories.Any(e => e.Name.ToLower() == name) || !ModelState.IsValid || user == null)
+            {
+                ViewData["Duplicate"] = "Kategoria ju¿ istnieje";
+                OnGet();
+                return Page();
+            }
+
             var category = new Models.Category()
             {
                 Name = NewCategory.Name,
@@ -54,10 +61,10 @@ namespace GroupMeeting.Areas.GroupCategories.Pages.Category
             return Redirect("./Category");
         }
 
-        public async Task<IActionResult> OnPostRemoveAsync(int id)
+        public IActionResult OnPostRemove(int id)
         {
             var category = _context.Categories.FirstOrDefault(e => e.Id == id);
-             _context.Categories.Remove(category);
+            _context.Categories.Remove(category);
             _context.SaveChanges();
             return Redirect("./Category");
         }

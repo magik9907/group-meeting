@@ -22,11 +22,14 @@ namespace GroupMeeting.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<GroupCategory> GroupCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Category>()
           .HasKey(e => e.Id);
+
+            builder.Entity<GroupCategory>().HasKey(gc => new { gc.CategoryId, gc.GroupId });
 
             builder.Entity<Category>()
                .HasOne(c => c.User)

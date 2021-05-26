@@ -6,6 +6,7 @@
 <h1>Category List</h1>
 
 <form method="post" asp-page-handler="Create">
+    <p class="alert-danger">@ViewData["Duplicate"]</p>
     <label asp-for="NewCategory.Name" class="control-label"></label>
     <input asp-for="NewCategory.Name" class="form-control" />
     <span asp-validation-for="NewCategory.Name" class="text-danger"></span>
