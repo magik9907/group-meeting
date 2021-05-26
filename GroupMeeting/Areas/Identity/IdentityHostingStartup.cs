@@ -21,7 +21,7 @@ namespace GroupMeeting.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("GroupMeetingContextConnection")));
                 
-                services.AddDefaultIdentity<ApplicationUser>(options =>
+                services.AddDefaultIdentity<User>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = true;
                     options.User.RequireUniqueEmail = true;

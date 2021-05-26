@@ -12,7 +12,7 @@ using GroupMeeting.Models;
 
 namespace GroupMeeting.Data
 {
-    public class GroupMeetingContext : IdentityDbContext<ApplicationUser>
+    public class GroupMeetingContext : IdentityDbContext<User>
     {
         public GroupMeetingContext(DbContextOptions<GroupMeetingContext> options)
             : base(options)

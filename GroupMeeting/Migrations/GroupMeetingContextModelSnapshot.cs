@@ -347,114 +347,116 @@ namespace GroupMeeting.Migrations
                 {
                     b.HasOne("GroupMeeting.Areas.Identity.Data.User", "User")
                         .WithMany("Categories")
-                        .HasForeignKey("UserId")
-            modelBuilder.Entity("GroupMeeting.Models.Group", b =>
-                {
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerID");
-                });
-
-            modelBuilder.Entity("GroupMeeting.Models.GroupCity", b =>
-                {
-                    b.HasOne("GroupMeeting.Models.City", "City")
-                        .WithMany("GroupCities")
-                        .HasForeignKey("CityID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GroupMeeting.Models.Group", "Group")
-                        .WithMany("GroupCities")
-                        .HasForeignKey("GroupID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GroupMeeting.Models.GroupOwner", b =>
-                {
-                    b.HasOne("GroupMeeting.Models.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", "Owner")
-                        .WithOne()
-                        .HasForeignKey("GroupMeeting.Models.GroupOwner", "OwnerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
-                        .WithMany("GroupOwners")
                         .HasForeignKey("UserId");
-                });
+                    modelBuilder.Entity("GroupMeeting.Models.Group", b =>
+                        {
+                            b.HasOne("GroupMeeting.Areas.Identity.Data.User", "Owner")
+                                .WithMany()
+                                .HasForeignKey("OwnerID");
+                        });
 
-            modelBuilder.Entity("GroupMeeting.Models.GroupUser", b =>
-                {
-                    b.HasOne("GroupMeeting.Models.Group", "Group")
-                        .WithMany("GroupUsers")
-                        .HasForeignKey("GroupID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("GroupMeeting.Models.GroupCity", b =>
+                        {
+                            b.HasOne("GroupMeeting.Models.City", "City")
+                                .WithMany("GroupCities")
+                                .HasForeignKey("CityID")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", "User")
-                        .WithMany("GroupUsers")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                            b.HasOne("GroupMeeting.Models.Group", "Group")
+                                .WithMany("GroupCities")
+                                .HasForeignKey("GroupID")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    modelBuilder.Entity("GroupMeeting.Models.GroupOwner", b =>
+                        {
+                            b.HasOne("GroupMeeting.Models.Group", "Group")
+                                .WithMany()
+                                .HasForeignKey("GroupID")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                            b.HasOne("GroupMeeting.Areas.Identity.Data.User", "Owner")
+                                .WithOne()
+                                .HasForeignKey("GroupMeeting.Models.GroupOwner", "OwnerID")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                            b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
+                                .WithMany("GroupOwners")
+                                .HasForeignKey("UserId");
+                        });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("GroupMeeting.Models.GroupUser", b =>
+                        {
+                            b.HasOne("GroupMeeting.Models.Group", "Group")
+                                .WithMany("GroupUsers")
+                                .HasForeignKey("GroupID")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                            b.HasOne("GroupMeeting.Areas.Identity.Data.User", "User")
+                                .WithMany("GroupUsers")
+                                .HasForeignKey("UserID")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                        {
+                            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                                .WithMany()
+                                .HasForeignKey("RoleId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
+
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                        {
+                            b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
+                                .WithMany()
+                                .HasForeignKey("UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
+
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                        {
+                            b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
+                                .WithMany()
+                                .HasForeignKey("UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
+
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                        {
+                            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                                .WithMany()
+                                .HasForeignKey("RoleId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+
+                            b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
+                                .WithMany()
+                                .HasForeignKey("UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
+
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                    {
+                        b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
+                            .WithMany()
+                            .HasForeignKey("UserId")
+                            .OnDelete(DeleteBehavior.Cascade)
+                            .IsRequired();
+                    });
                 });
 #pragma warning restore 612, 618
         }
     }
 }
+

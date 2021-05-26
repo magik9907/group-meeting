@@ -22,12 +22,12 @@ namespace GroupMeeting.Areas.GroupCategories.Pages.Category
         }
 
         private readonly GroupMeetingContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
         public IList<Models.Category> Categories { get; set; }
         [BindProperty]
         public Category NewCategory { get; set; }
         public string Id;
-        public IndexModel(GroupMeetingContext context, UserManager<ApplicationUser> userManager)
+        public IndexModel(GroupMeetingContext context, UserManager<User> userManager)
         {
             _context = context;
             _userManager = userManager;

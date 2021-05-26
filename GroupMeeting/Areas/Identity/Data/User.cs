@@ -9,7 +9,7 @@ using GroupMeeting.Models;
 
 namespace GroupMeeting.Areas.Identity.Data
 {
-    public class ApplicationUser : IdentityUser
+    public class User : IdentityUser
     {
         [PersonalData, MaxLength(50)]
         public string FirstName { get; set; }

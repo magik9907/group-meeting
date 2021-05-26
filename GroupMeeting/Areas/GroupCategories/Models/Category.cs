@@ -18,6 +18,6 @@ namespace GroupMeeting.Areas.GroupCategories.Models
         public string Name { get; set; }
         [Required]
         public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public User User { get; set; }
     }
 }
