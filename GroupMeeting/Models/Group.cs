@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using GroupMeeting.Areas.Identity.Data;
-
+using GroupMeeting.Areas.GroupCategories.Models;
 namespace GroupMeeting.Models
 {
     public class Group
@@ -20,5 +20,6 @@ namespace GroupMeeting.Models
         public ICollection<GroupUser> GroupUsers { get; set; }
         public string OwnerID { get; set; }
         public User Owner { get; set; }
+        public IList<GroupCategory> GroupCategories { get; set; }
     }
 }

@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+@using GroupMeeting.Areas.GroupCategories.Models
 <h1>Edit</h1>
 
 <h4>Group</h4>
@@ -24,12 +24,44 @@
                 <input asp-for="Group.Description" class="form-control" />
                 <span asp-validation-for="Group.Description" class="text-danger"></span>
             </div>
+            <div hidden class="form-group">
+                <label asp-for="Group.OwnerID" class="control-label"></label>
+                <select asp-for="Group.OwnerID" class="form-control" asp-items="ViewBag.OwnerID"></select>
+                <span asp-validation-for="Group.OwnerID" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+<div>
+    @foreach (var x in Model.Group.GroupCategories)
+    {
+        <form method="post" asp-page-handler="DeleteCategory">
+            <input type="hidden" asp-for="@x.GroupId" />
+            <input type="hidden" asp-for="@x.CategoryId" />
+            <p>@x.Category.Name</p>
+            <button type="submit">Delete</button>
+        </form>
+    }
+</div>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-page-handler="AddCategory">
+            <input type="hidden" asp-for="AddGroupCategory.GroupId" />
+            <div class="form-group">
+                <label asp-for="AddGroupCategory.CategoryName" class="control-label"></label>
+                <input asp-for="AddGroupCategory.CategoryName" class="form-control" />
+                <span asp-validation-for="AddGroupCategory.CategoryName" class="text-danger"></span>
+            </div>
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+
 
 <div>
     <a asp-page="./Index">Back to List</a>

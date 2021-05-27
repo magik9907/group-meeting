@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{name?}"
 @model GroupMeeting.IndexModel
 
 @{
@@ -10,6 +10,12 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<form method="post" asp-page-handler="Search">
+    <label asp-for="GroupName.Name" class="control-label"></label>
+    <input asp-for="GroupName.Name" class="form-control" />
+    <span asp-validation-for="GroupName.Name" class="text-danger"></span>
+    <button type-"submit">Szukaj</button>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -35,7 +41,8 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Owner.UserName)
+                @Html.DisplayFor(modelItem => item.Owner.UserName
+                )
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |

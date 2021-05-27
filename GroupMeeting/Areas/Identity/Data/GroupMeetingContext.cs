@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using GroupMeeting.Areas.Identity.Data;
+using GroupMeeting.Areas.GroupCategories.Models;
 using GroupMeeting.Models;
 
 namespace GroupMeeting.Data
@@ -18,11 +19,23 @@ namespace GroupMeeting.Data
         {
         }
 
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<GroupCategory> GroupCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Category>()
+          .HasKey(e => e.Id);
+
+            builder.Entity<GroupCategory>().HasKey(gc => new { gc.CategoryId, gc.GroupId });
+
+            builder.Entity<Category>()
+               .HasOne(c => c.User)
+                .WithMany(g => g.Categories)
+                .HasForeignKey(f => f.UserId);
+
             base.OnModelCreating(builder);
             builder.Entity<GroupCity>()
                 .HasKey(gc => new { gc.GroupID, gc.CityID });

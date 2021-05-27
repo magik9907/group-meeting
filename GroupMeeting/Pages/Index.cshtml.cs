@@ -10,7 +10,6 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
-
 namespace GroupMeeting.Pages
 {
     public class IndexModel : PageModel
