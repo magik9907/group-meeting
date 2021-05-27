@@ -108,8 +108,11 @@ namespace GroupMeeting
             }
 
             var signCategoryToGroup = new GroupCategory() { Category = category, GroupId = AddGroupCategory.GroupId };
-            _context.GroupCategories.Add(signCategoryToGroup);
-            _context.SaveChanges();
+            if (_context.GroupCategories.Any(e => e.CategoryId == signCategoryToGroup.Category.Id && e.GroupId == signCategoryToGroup.GroupId) == false)
+            {
+                _context.GroupCategories.Add(signCategoryToGroup);
+                _context.SaveChanges();
+            }
             return Redirect("./Edit?id=" + signCategoryToGroup.GroupId);
         }
 
@@ -117,12 +120,7 @@ namespace GroupMeeting
         {
             var groupId = int.Parse(Request.Form["x.GroupId"]);
             var categoryId = int.Parse(Request.Form["x.CategoryId"]);
-            /* var toDeleteGroupCateogry = (from c in _context.GroupCategories
-                                         where c.CategoryId == categoryId
-                                         && c.GroupId == groupId
-                                         select c).FirstOrDefault();*/
             var ToDelete = new GroupCategory() { GroupId = groupId, CategoryId = categoryId };
-            /*_context.GroupCategories.Where(e => e.GroupId == groupId || e.CategoryId == categoryId).ToList()[0];*/
             _context.GroupCategories.Remove(ToDelete);
             _context.SaveChanges();
             return Redirect("./Edit?id=" + groupId);
