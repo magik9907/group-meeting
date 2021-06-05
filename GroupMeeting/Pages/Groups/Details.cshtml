@@ -27,8 +27,18 @@
             @Html.DisplayNameFor(model => model.Group.Owner)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Group.Owner.Id)
+            @Html.DisplayFor(model => model.Group.Owner.UserName)
         </dd>
+        <dt class="col-sm-2">
+            Users
+        </dt>
+
+        @foreach (var item in Model.Group.GroupUsers)
+        {
+            <dd class="col-sm-10">
+                @item.User.FirstName
+            </dd>
+        }
     </dl>
 </div>
 <div>

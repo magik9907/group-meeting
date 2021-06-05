@@ -24,6 +24,7 @@ namespace GroupMeeting
         }
 
         private readonly GroupMeeting.Data.GroupMeetingContext _context;
+
         public EditModel(GroupMeeting.Data.GroupMeetingContext context)
         {
             _context = context;
