@@ -23,7 +23,7 @@
                 Options
             </th>
         </tr>
-    </thead>    
+    </thead>
     <tbody>
         @if (Model.Categories != null)
             @foreach (var item in Model.Categories)
@@ -33,11 +33,13 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @if(item.UserId == Model.Id) { 
-                       <form  asp-page-handler="Remove" asp-route-Id="@item.Id">
-                           <button type="submit">Delete</button>
-                       </form>
-                       }
+                        @if (item.UserId == Model.Id)
+                        {
+                            <form asp-page-handler="Remove" asp-route-Id="@item.Id">
+                                <button type="submit">Delete</button>
+                            </form>
+                            <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                        }
                     </td>
                 </tr>
             }
