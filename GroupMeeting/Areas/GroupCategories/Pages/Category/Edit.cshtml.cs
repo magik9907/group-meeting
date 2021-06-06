@@ -38,7 +38,7 @@ namespace GroupMeeting.Areas.GroupCategories.Pages.Category
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-                if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return Page();
             Models.Category category = await _context.Categories.FindAsync(id);
             if (await TryUpdateModelAsync<Models.Category>(category, "newCategory", x => x.Name))
