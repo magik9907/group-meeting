@@ -196,10 +196,15 @@ class PDFTicket {
 
 document.querySelector('#GeneratePdfButton').addEventListener('click', event => {
   const id = event.target.dataset['id'];
-  fetch(`${location.protocol}//${location.host}/api/ticket/${id}`).then(response => response.json()).then(data => {
-    const pdf = new PDFTicket(data);
-    pdf.Create();
-  });
+
+  try {
+    fetch(`${location.protocol}//${location.host}/api/ticket/${id}`).then(response => response.json()).then(data => {
+      const pdf = new PDFTicket(data);
+      pdf.Create();
+    }).catch(e => console.log(e));
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 /***/ }),
