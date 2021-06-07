@@ -21,5 +21,6 @@ namespace GroupMeeting.Models
         public string OwnerID { get; set; }
         public User Owner { get; set; }
         public IList<GroupCategory> GroupCategories { get; set; }
+        public ICollection<Meeting> Meetings { get; set; }
     }
 }

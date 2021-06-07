@@ -1,0 +1,61 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using GroupMeeting.Areas.Identity.Data;
+
+@inject UserManager<User> UserManager
+@model GroupMeeting.Pages.Meetings.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nazwa spotkania
+            </th>
+            <th>
+                Nazwa grupy
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meeting[0].Start_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meeting[0].Start_Time)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Meeting)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start_Time)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
+                @if ((await UserManager.GetUserAsync(User)) == item.Group.Owner)
+                {
+                    <span> | </span>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a><span> | </span>
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

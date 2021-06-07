@@ -23,6 +23,8 @@ namespace GroupMeeting.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<GroupCategory> GroupCategories { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -66,6 +68,13 @@ namespace GroupMeeting.Data
                 e.HasOne(go => go.Owner).WithOne().HasForeignKey<GroupOwner>(go => go.OwnerID);
             }
             );
+            builder.Entity<Meeting>()
+                .HasKey(x => x.ID);
+            builder.Entity<Meeting>()
+                .HasOne(x => x.Group)
+                .WithMany(y => y.Meetings)
+                .HasForeignKey(z => z.Group_id);
+
             //wat
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.

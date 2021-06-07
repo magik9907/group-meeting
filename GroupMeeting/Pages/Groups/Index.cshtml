@@ -1,4 +1,10 @@
 ﻿@page "{name?}/{category?}"
+
+@using Microsoft.AspNetCore.Identity
+@using GroupMeeting.Areas.Identity.Data;
+
+@inject UserManager<User> UserManager
+
 @model GroupMeeting.IndexModel
 
 @{
@@ -32,7 +38,7 @@
                 @Html.DisplayNameFor(model => model.Group[0].Owner)
             </th>
             <th>
-               Kategoria
+                Kategoria
             </th>
             <th></th>
         </tr>
@@ -63,7 +69,14 @@
                     <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> |
                     <a asp-page="./Join" asp-route-id="@item.ID">Join</a> |
                     <a asp-page="./Leave" asp-route-id="@item.ID">Leave</a>
+
+                    @if ( (await UserManager.GetUserAsync(User)) == item.Owner)
+                    {
+                        <span> | </span>
+                        <a asp-page="../Meetings/Create" asp-route-id="@item.ID"> Create Meeting</a>
+                    }
                 </td>
+
             </tr>
         }
     </tbody>
