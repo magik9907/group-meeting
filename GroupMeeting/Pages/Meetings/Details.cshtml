@@ -1,0 +1,63 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using GroupMeeting.Areas.Identity.Data;
+
+@inject UserManager<User> UserManager
+@model GroupMeeting.Pages.Meetings.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Meeting</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Group name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Group.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Group ID
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Group.ID)
+        </dd>
+        <dt class="col-sm-2">
+            Meeting ID
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.ID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.Start_Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Start_Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.Start_Time)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Start_Time)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if ((await UserManager.GetUserAsync(User)) == Model.Meeting.Group.Owner)
+    {
+        <a asp-page="./Edit" asp-route-id="@Model.Meeting.ID">Edit</a>
+        <span> | </span>
+    }
+    <a asp-page="./Index">Back to List</a>
+</div>
