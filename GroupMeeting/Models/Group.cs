@@ -16,7 +16,7 @@ namespace GroupMeeting.Models
         public string Name { get; set; }
         [MaxLength(1000)]
         public string Description { get; set; }
-        public ICollection<GroupCity> GroupCities { get; set; }
+        public City City { get; set; }
         public ICollection<GroupUser> GroupUsers { get; set; }
         public string OwnerID { get; set; }
         public User Owner { get; set; }

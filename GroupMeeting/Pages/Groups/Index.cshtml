@@ -28,6 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Group[0].Owner)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group[0].City)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -41,13 +44,17 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Owner.UserName
-                )
+                @Html.DisplayFor(modelItem => item.Owner.UserName)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @if (item.Owner == Model.user)
+                {
+        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> <a>|</a>
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> <a>|</a>                }
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
             </td>
         </tr>
 }

@@ -26,8 +26,13 @@ namespace GroupMeeting.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<Category>()
-          .HasKey(e => e.Id);
+                .HasKey(e => e.Id);
+
+            builder.Entity<User>()
+                .HasKey(e => e.Id);
 
             builder.Entity<GroupCategory>().HasKey(gc => new { gc.CategoryId, gc.GroupId });
 
@@ -36,17 +41,12 @@ namespace GroupMeeting.Data
                 .WithMany(g => g.Categories)
                 .HasForeignKey(f => f.UserId);
 
-            base.OnModelCreating(builder);
-            builder.Entity<GroupCity>()
-                .HasKey(gc => new { gc.GroupID, gc.CityID });
-            builder.Entity<GroupCity>()
-                .HasOne(x => x.Group)
-                .WithMany(g => g.GroupCities)
-                .HasForeignKey(y => y.GroupID);
-            builder.Entity<GroupCity>()
-                .HasOne(x => x.City)
-                .WithMany(y => y.GroupCities)
-                .HasForeignKey(y => y.CityID);
+            builder.Entity<GroupCity>(e =>
+            {
+                e.HasKey(go => new { go.GroupID, go.CityID });
+                e.HasOne(go => go.Group).WithOne().HasForeignKey<GroupCity>(go => go.GroupID);
+                e.HasOne(go => go.City).WithMany().HasForeignKey(go => go.CityID);
+            });
 
             builder.Entity<GroupUser>()
                 .HasKey(gc => new { gc.GroupID, gc.UserID });
