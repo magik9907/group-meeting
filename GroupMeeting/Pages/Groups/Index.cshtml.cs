@@ -29,10 +29,8 @@ namespace GroupMeeting
         [BindProperty]
         public SearchGroup GroupName { get; set; }
         public User user;
-        public IndexModel(GroupMeeting.Data.GroupMeetingContext context, UserManager<User> userManager)
         public List<SelectListItem> CategoriesList { get; set; }
-
-        public IndexModel(GroupMeeting.Data.GroupMeetingContext context)
+        public IndexModel(GroupMeetingContext context, UserManager<User> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -44,7 +42,6 @@ namespace GroupMeeting
         {
             user = await _userManager.GetUserAsync(HttpContext.User);
             if (name == null)
-            if (name == null && category == null)
                 Group = await _context.Groups
                     .Include(a => a.Owner).Include(a => a.GroupCategories).ThenInclude(a => a.Category).ToListAsync();
             else
