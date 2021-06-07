@@ -7,22 +7,28 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using GroupMeeting.Data;
 using GroupMeeting.Models;
+using Microsoft.AspNetCore.Identity;
+using GroupMeeting.Areas.Identity.Data;
 
 namespace GroupMeeting
 {
     public class DetailsModel : PageModel
     {
-        private readonly GroupMeeting.Data.GroupMeetingContext _context;
-
-        public DetailsModel(GroupMeeting.Data.GroupMeetingContext context)
+        private readonly GroupMeetingContext _context;
+        private readonly UserManager<User> _userManager;
+        public DetailsModel(GroupMeetingContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public Group Group { get; set; }
-
+        public string userID;
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if(user != null)
+                userID = user.Id;
             if (id == null)
             {
                 return NotFound();

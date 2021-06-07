@@ -10,6 +10,8 @@ using GroupMeeting.Data;
 using GroupMeeting.Models;
 using System.ComponentModel.DataAnnotations;
 using GroupMeeting.Areas.GroupCategories.Models;
+using Microsoft.AspNetCore.Identity;
+using GroupMeeting.Areas.Identity.Data;
 
 namespace GroupMeeting
 {
@@ -23,11 +25,13 @@ namespace GroupMeeting
             public string CategoryName { get; set; }
         }
 
-        private readonly GroupMeeting.Data.GroupMeetingContext _context;
+        private readonly GroupMeetingContext _context;
 
-        public EditModel(GroupMeeting.Data.GroupMeetingContext context)
+        private readonly UserManager<User> _userManager;
+        public EditModel(GroupMeetingContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -37,6 +41,7 @@ namespace GroupMeeting
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             if (id == null)
             {
                 return NotFound();
@@ -52,6 +57,8 @@ namespace GroupMeeting
             {
                 return NotFound();
             }
+            if (user == null || user.Id != Group.OwnerID)
+                return Redirect("./Details?id=" + id);
 
             AddGroupCategory = new AddCategory() { GroupId = Group.ID };
             ViewData["OwnerID"] = new SelectList(_context.Users, "Id", "Id");
