@@ -41,6 +41,7 @@ namespace GroupMeeting
             {
                 return NotFound();
             }
+            Group.City = _context.Cities.FirstOrDefault(c => c.ID == Group.CityID);
             if (user == null || user.Id != Group.OwnerID)
                 return Redirect("./Details?id=" + id);
             return Page();
@@ -54,10 +55,16 @@ namespace GroupMeeting
             }
 
             Group = await _context.Groups.FindAsync(id);
+            var groupOwner = await _context.GroupOwner.FirstAsync(go => go.GroupID == Group.ID && go.OwnerID == Group.OwnerID);
+            var groupCity = await _context.GroupCity.FirstAsync(go => go.GroupID == Group.ID && go.CityID == Group.CityID);
 
             if (Group != null)
             {
                 _context.Groups.Remove(Group);
+                if(groupOwner != null)
+                    _context.GroupOwner.Remove(groupOwner);
+                if (groupCity != null)
+                    _context.GroupCity.Remove(groupCity);
                 await _context.SaveChangesAsync();
             }
 

@@ -38,7 +38,7 @@ namespace GroupMeeting
                                     .Include(a => a.Owner)
                                     .Include(g=>g.GroupUsers).ThenInclude(gu=>gu.User)
                                     .FirstOrDefaultAsync(m => m.ID == id);
-
+            Group.City = _context.Cities.FirstOrDefault(c => c.ID == Group.CityID);
             if (Group == null)
             {
                 return NotFound();

@@ -59,6 +59,7 @@ namespace GroupMeeting
             {
                 return NotFound();
             }
+            Group.City = _context.Cities.FirstOrDefault(c => c.ID == Group.CityID);
             var user = await _userManager.GetUserAsync(HttpContext.User);
             if (user == null || user.Id != Group.OwnerID)
                 return Redirect("./Details?id=" + id);
@@ -77,14 +78,21 @@ namespace GroupMeeting
                 await OnGetAsync(Group.ID);
                 return Page();
             }
-
-            _context.Attach(Group).State = EntityState.Modified;
+            var groupCity = await _context.GroupCity.FirstAsync(gc => gc.CityID == Group.CityID && gc.GroupID == Group.ID);
             var city = _context.Cities.FirstOrDefault(a => a.Name == Group.City.Name);
             if (city == null)
             {
-                city = new City(Group.City.Name);
+                city = Group.City;
                 _context.Cities.Add(city);
             }
+            Group.City = city;
+            Group.CityID = city.ID;
+            _context.GroupCity.Remove(groupCity);
+            groupCity = new GroupCity();
+            groupCity.CityID = Group.CityID;
+            groupCity.GroupID = Group.ID;
+            _context.GroupCity.Add(groupCity);
+            _context.Attach(Group).State = EntityState.Modified;
             try
             {
                 await _context.SaveChangesAsync();

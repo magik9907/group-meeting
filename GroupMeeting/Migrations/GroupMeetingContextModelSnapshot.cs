@@ -153,7 +153,7 @@ namespace GroupMeeting.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CityID")
+                    b.Property<int>("CityID")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -170,7 +170,8 @@ namespace GroupMeeting.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CityID");
+                    b.HasIndex("CityID")
+                        .IsUnique();
 
                     b.HasIndex("OwnerID");
 
@@ -426,8 +427,10 @@ namespace GroupMeeting.Migrations
             modelBuilder.Entity("GroupMeeting.Models.Group", b =>
                 {
                     b.HasOne("GroupMeeting.Models.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityID");
+                        .WithOne()
+                        .HasForeignKey("GroupMeeting.Models.Group", "CityID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("GroupMeeting.Areas.Identity.Data.User", "Owner")
                         .WithMany()

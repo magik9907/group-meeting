@@ -30,7 +30,8 @@ namespace GroupMeeting
         
         [BindProperty]
         public Group Group { get; set; }
-
+        [BindProperty]
+        public City City { get; set; }
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -39,8 +40,28 @@ namespace GroupMeeting
             {
                 return Page();
             }
+            var city = _context.Cities.FirstOrDefault(c => c.Name == City.Name);
+            if (city == null)
+            {
+                city = new City();
+                city.Name = City.Name;
+                _context.Cities.Add(city);
+                await _context.SaveChangesAsync();
+            }
             Group.OwnerID = _userManager.GetUserId(HttpContext.User);
+            Group.CityID = city.ID;
+            Group.City = city;
+            var groupOwner = new GroupOwner();
+            groupOwner.OwnerID = Group.OwnerID;
+            groupOwner.Owner = await _userManager.GetUserAsync(HttpContext.User);
             _context.Groups.Add(Group);
+            await _context.SaveChangesAsync();
+            groupOwner.GroupID = Group.ID;
+            var groupCity = new GroupCity();
+            groupCity.CityID = city.ID;
+            groupCity.GroupID = Group.ID;
+            _context.GroupCity.Add(groupCity);
+            _context.GroupOwner.Add(groupOwner);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

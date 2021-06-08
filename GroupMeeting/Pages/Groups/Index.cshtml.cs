@@ -42,8 +42,10 @@ namespace GroupMeeting
         {
             user = await _userManager.GetUserAsync(HttpContext.User);
             if (name == null)
+            {
                 Group = await _context.Groups
                     .Include(a => a.Owner).Include(a => a.GroupCategories).ThenInclude(a => a.Category).ToListAsync();
+            }
             else
             {
                 GroupName = new SearchGroup();
@@ -69,7 +71,10 @@ namespace GroupMeeting
                                    select c).Include(x => x.GroupCategories).ThenInclude(x => x.Category).ToListAsync();
                 }
             }
-
+            foreach (Group group in Group)
+            {
+                group.City = _context.Cities.FirstOrDefault(c => c.ID == group.CityID);
+            }
             CategoriesList = _context.Categories.Select(a =>
                                                             new SelectListItem { Value = a.Id.ToString(), Text = a.Name }
                                                         ).ToList();

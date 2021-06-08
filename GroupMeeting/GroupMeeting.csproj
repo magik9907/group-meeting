@@ -8,6 +8,18 @@
   <ItemGroup>
     <Compile Remove="Migrations\20210608125907_GroupOwnerQuickfix.cs" />
     <Compile Remove="Migrations\20210608125907_GroupOwnerQuickfix.Designer.cs" />
+    <Compile Remove="Migrations\20210608142540_ResetDB.cs" />
+    <Compile Remove="Migrations\20210608142540_ResetDB.Designer.cs" />
+    <Compile Remove="Migrations\20210608145733_OnDeleteNoAction.cs" />
+    <Compile Remove="Migrations\20210608145733_OnDeleteNoAction.Designer.cs" />
+    <Compile Remove="Migrations\20210608160542_CityChange.cs" />
+    <Compile Remove="Migrations\20210608160542_CityChange.Designer.cs" />
+    <Compile Remove="Migrations\20210608160649_CityChange.cs" />
+    <Compile Remove="Migrations\20210608160649_CityChange.Designer.cs" />
+    <Compile Remove="Migrations\20210608160719_CityChange.cs" />
+    <Compile Remove="Migrations\20210608160719_CityChange.Designer.cs" />
+    <Compile Remove="Migrations\20210608160822_CityChange.cs" />
+    <Compile Remove="Migrations\20210608160822_CityChange.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
