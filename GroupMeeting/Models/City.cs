@@ -8,6 +8,12 @@ namespace GroupMeeting.Models
 {
     public class City
     {
+        public City(string name)
+        {
+            Name = name;
+        }
+        public City()
+        { }
         [Required]
         public int ID { get; set; }
         [MaxLength(50)]

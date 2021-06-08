@@ -33,15 +33,17 @@ namespace GroupMeeting
             _context = context;
             _userManager = userManager;
         }
+        private bool GroupExists(int id)
+        {
+            return _context.Groups.Any(e => e.ID == id);
+        }
 
         [BindProperty]
         public Group Group { get; set; }
         [BindProperty]
         public AddCategory AddGroupCategory { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
             if (id == null)
             {
                 return NotFound();
@@ -53,10 +55,11 @@ namespace GroupMeeting
                 .Include(a => a.Owner).FirstOrDefaultAsync(m => m.ID == id)
                 ;
 
-            if (Group == null)
+            if (!GroupExists(Group.ID))
             {
                 return NotFound();
             }
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             if (user == null || user.Id != Group.OwnerID)
                 return Redirect("./Details?id=" + id);
 
@@ -75,7 +78,12 @@ namespace GroupMeeting
             }
 
             _context.Attach(Group).State = EntityState.Modified;
-
+            var city = _context.Cities.FirstOrDefault(a => a.Name == Group.City.Name);
+            if (city == null)
+            {
+                city = new City(Group.City.Name);
+                _context.Cities.Add(city);
+            }
             try
             {
                 await _context.SaveChangesAsync();
@@ -93,11 +101,6 @@ namespace GroupMeeting
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool GroupExists(int id)
-        {
-            return _context.Groups.Any(e => e.ID == id);
         }
 
         public async Task<IActionResult> OnPostAddCategoryAsync()

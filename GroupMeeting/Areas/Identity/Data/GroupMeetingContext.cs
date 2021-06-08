@@ -64,8 +64,8 @@ namespace GroupMeeting.Data
             builder.Entity<GroupOwner>(e =>
             {
                 e.HasKey(go => new { go.GroupID, go.OwnerID });
-                e.HasOne(go => go.Group).WithMany().HasForeignKey(go => go.GroupID);
-                e.HasOne(go => go.Owner).WithOne().HasForeignKey<GroupOwner>(go => go.OwnerID);
+                e.HasOne(go => go.Group).WithOne().HasForeignKey<GroupOwner>(go => go.GroupID);
+                e.HasOne(go => go.Owner).WithMany().HasForeignKey(go => go.OwnerID);
             }
             );
             builder.Entity<Meeting>()

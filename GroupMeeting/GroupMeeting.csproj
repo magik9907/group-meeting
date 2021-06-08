@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210608125907_GroupOwnerQuickfix.cs" />
+    <Compile Remove="Migrations\20210608125907_GroupOwnerQuickfix.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Areas\GroupCategories\Data\" />
     <Folder Include="Data\" />
     <Folder Include="Models\" />

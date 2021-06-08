@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GroupMeeting.Data;
 using GroupMeeting.Models;
+using Microsoft.AspNetCore.Identity;
+using GroupMeeting.Areas.Identity.Data;
 
 namespace GroupMeeting
 {
     public class CreateModel : PageModel
     {
-        private readonly GroupMeeting.Data.GroupMeetingContext _context;
-
-        public CreateModel(GroupMeeting.Data.GroupMeetingContext context)
+        private readonly GroupMeetingContext _context;
+        private readonly UserManager<User> _userManager;
+        public CreateModel(GroupMeetingContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet()
@@ -24,7 +27,7 @@ namespace GroupMeeting
         ViewData["OwnerID"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
-
+        
         [BindProperty]
         public Group Group { get; set; }
 
@@ -36,7 +39,7 @@ namespace GroupMeeting
             {
                 return Page();
             }
-
+            Group.OwnerID = _userManager.GetUserId(HttpContext.User);
             _context.Groups.Add(Group);
             await _context.SaveChangesAsync();
 

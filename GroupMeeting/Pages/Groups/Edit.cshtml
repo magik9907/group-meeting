@@ -24,6 +24,11 @@
                 <input asp-for="Group.Description" class="form-control" />
                 <span asp-validation-for="Group.Description" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Group.City" class="control-label"></label>
+                <input asp-for="Group.City" class="form-control" />
+                <span asp-validation-for="Group.City" class="text-danger"></span>
+            </div>
             <div hidden class="form-group">
                 <label asp-for="Group.OwnerID" class="control-label"></label>
                 <select asp-for="Group.OwnerID" class="form-control" asp-items="ViewBag.OwnerID"></select>
@@ -36,6 +41,8 @@
     </div>
 </div>
 <div>
+    @if (Model.Group.GroupCategories != null)
+    {
     @foreach (var x in Model.Group.GroupCategories)
     {
         <form method="post" asp-page-handler="DeleteCategory">
@@ -44,7 +51,7 @@
             <p>@x.Category.Name</p>
             <button type="submit">Delete</button>
         </form>
-    }
+    }}
 </div>
 
 
