@@ -72,8 +72,9 @@ namespace GroupMeeting
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.Values.Where(x=>x.ValidationState.ToString() =="Valid").ToArray().Length < 4)
             {
+                await OnGetAsync(Group.ID);
                 return Page();
             }
 

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace GroupMeeting.Controller
 {
+
     [Microsoft.AspNetCore.Authorization.Authorize]
     [Route("api/ticket")]
     [ApiController]
