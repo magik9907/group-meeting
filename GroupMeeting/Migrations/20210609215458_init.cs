@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GroupMeeting.Migrations
 {
-    public partial class ResetDB : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -195,7 +195,7 @@ namespace GroupMeeting.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
                     Description = table.Column<string>(maxLength: 1000, nullable: true),
-                    CityID = table.Column<int>(nullable: true),
+                    CityID = table.Column<int>(nullable: false),
                     OwnerID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -347,6 +347,37 @@ namespace GroupMeeting.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MeetingUser",
+                columns: table => new
+                {
+                    MeetingID = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
+                    UserId1 = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeetingUser", x => new { x.MeetingID, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_MeetingUser_Meetings_MeetingID",
+                        column: x => x.MeetingID,
+                        principalTable: "Meetings",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MeetingUser_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MeetingUser_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -431,7 +462,8 @@ namespace GroupMeeting.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_CityID",
                 table: "Groups",
-                column: "CityID");
+                column: "CityID",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_OwnerID",
@@ -447,6 +479,16 @@ namespace GroupMeeting.Migrations
                 name: "IX_Meetings_Group_id",
                 table: "Meetings",
                 column: "Group_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MeetingUser_UserId",
+                table: "MeetingUser",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MeetingUser_UserId1",
+                table: "MeetingUser",
+                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -479,13 +521,16 @@ namespace GroupMeeting.Migrations
                 name: "GroupUser");
 
             migrationBuilder.DropTable(
-                name: "Meetings");
+                name: "MeetingUser");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Meetings");
 
             migrationBuilder.DropTable(
                 name: "Groups");

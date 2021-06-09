@@ -24,7 +24,10 @@ namespace GroupMeeting
 
         public IActionResult OnGet()
         {
-        ViewData["OwnerID"] = new SelectList(_context.Users, "Id", "Id");
+            var user = _userManager.GetUserId(HttpContext.User);
+            if (_context.GroupOwner.Where(e => e.OwnerID == user).Count() > 9) 
+
+            ViewData["OwnerID"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
         
@@ -43,23 +46,29 @@ namespace GroupMeeting
             var city = _context.Cities.FirstOrDefault(c => c.Name == City.Name);
             if (city == null)
             {
-                city = new City();
-                city.Name = City.Name;
+                city = new City
+                {
+                    Name = City.Name
+                };
                 _context.Cities.Add(city);
                 await _context.SaveChangesAsync();
             }
             Group.OwnerID = _userManager.GetUserId(HttpContext.User);
             Group.CityID = city.ID;
             Group.City = city;
-            var groupOwner = new GroupOwner();
-            groupOwner.OwnerID = Group.OwnerID;
-            groupOwner.Owner = await _userManager.GetUserAsync(HttpContext.User);
+            var groupOwner = new GroupOwner
+            {
+                OwnerID = Group.OwnerID,
+                Owner = await _userManager.GetUserAsync(HttpContext.User)
+            };
             _context.Groups.Add(Group);
             await _context.SaveChangesAsync();
             groupOwner.GroupID = Group.ID;
-            var groupCity = new GroupCity();
-            groupCity.CityID = city.ID;
-            groupCity.GroupID = Group.ID;
+            var groupCity = new GroupCity
+            {
+                CityID = city.ID,
+                GroupID = Group.ID
+            };
             _context.GroupCity.Add(groupCity);
             _context.GroupOwner.Add(groupOwner);
             await _context.SaveChangesAsync();

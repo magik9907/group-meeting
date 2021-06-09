@@ -1,0 +1,67 @@
+﻿@page
+@model GroupMeeting.Pages.Meetings.UserMeetingsModel
+@using GroupMeeting.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<User> _userManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Your meetings</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nazwa spotkania
+            </th>
+            <th>
+                Nazwa grupy
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meeting[0].Start_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meeting[0].Start_Time)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Meeting)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start_Time)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
+                    @if (_userManager.GetUserId(HttpContext.User) == item.Group.OwnerID)
+                    {
+                        <span> | </span>
+                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a><span> | </span>
+                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    }
+                    @if (await _userManager.GetUserAsync(HttpContext.User) != null)
+                    {
+                        <span> | </span>
+                        <a asp-page="./Join" asp-route-id="@item.ID">Join</a><span> | </span>
+                        <a asp-page="./Leave" asp-route-id="@item.ID">Leave</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

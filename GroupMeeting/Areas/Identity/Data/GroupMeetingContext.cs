@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using GroupMeeting.Areas.Identity.Data;
 using GroupMeeting.Areas.GroupCategories.Models;
 using GroupMeeting.Models;
+
 namespace GroupMeeting.Data
 {
     public class GroupMeetingContext : IdentityDbContext<User>
@@ -21,6 +22,7 @@ namespace GroupMeeting.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<GroupCategory> GroupCategories { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<MeetingUser> MeetingUser{ get; set; }
         public GroupMeetingContext(DbContextOptions<GroupMeetingContext> options)
             : base(options)
         {
@@ -46,6 +48,15 @@ namespace GroupMeeting.Data
                .HasOne(c => c.User)
                 .WithMany(g => g.Categories)
                 .HasForeignKey(f => f.UserId);
+
+            builder.Entity<MeetingUser>(e =>
+            {
+                e.HasKey(mu => new { mu.MeetingID, mu.UserId });
+                e.Property(ent => ent.MeetingID).ValueGeneratedNever();
+                e.Property(ent => ent.UserId).ValueGeneratedNever();
+                e.HasOne(mu => mu.Meeting).WithMany().HasForeignKey(mu => mu.MeetingID).OnDelete(DeleteBehavior.Restrict);
+                e.HasOne(mu => mu.User).WithMany().HasForeignKey(mu => mu.UserId).OnDelete(DeleteBehavior.Restrict);
+            });
 
             builder.Entity<GroupCity>(e =>
             {

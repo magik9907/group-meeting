@@ -1,16 +1,11 @@
 ﻿@page
-@using Microsoft.AspNetCore.Identity
-@using GroupMeeting.Areas.Identity.Data;
-
-@inject UserManager<User> UserManager
-@model GroupMeeting.Pages.Meetings.DetailsModel
-
+@model GroupMeeting.Pages.Meetings.LeaveModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Leave";
 }
+<h1>Leave</h1>
 
-<h1>Details</h1>
-
+<h3>Are you sure you want to leave this group?</h3>
 <div>
     <h4>Meeting</h4>
     <hr />
@@ -40,12 +35,10 @@
             @Html.DisplayFor(model => model.Meeting.Start_Time)
         </dd>
     </dl>
-</div>
-<div>
-    @if ((await UserManager.GetUserAsync(User)) == Model.Meeting.Group.Owner)
-    {
-        <a asp-page="./Edit" asp-route-id="@Model.Meeting.ID">Edit</a>
-        <span> | </span>
-    }
-    <a asp-page="./Index">Back to List</a>
+
+    <form method="post">
+        <input type="hidden" asp-for="Meeting.ID" />
+        <input type="submit" value="Leave" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
 </div>

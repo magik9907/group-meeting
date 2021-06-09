@@ -88,9 +88,11 @@ namespace GroupMeeting
             Group.City = city;
             Group.CityID = city.ID;
             _context.GroupCity.Remove(groupCity);
-            groupCity = new GroupCity();
-            groupCity.CityID = Group.CityID;
-            groupCity.GroupID = Group.ID;
+            groupCity = new GroupCity
+            {
+                CityID = Group.CityID,
+                GroupID = Group.ID
+            };
             _context.GroupCity.Add(groupCity);
             _context.Attach(Group).State = EntityState.Modified;
             try

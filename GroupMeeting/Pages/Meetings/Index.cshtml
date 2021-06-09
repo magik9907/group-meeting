@@ -1,15 +1,11 @@
 ﻿@page
-@using Microsoft.AspNetCore.Identity
-@using GroupMeeting.Areas.Identity.Data;
-
-@inject UserManager<User> UserManager
 @model GroupMeeting.Pages.Meetings.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Index</h1><p><a asp-page="UserMeetings">See meetings you joined</a></p>
 
 
 <table class="table">
@@ -48,11 +44,17 @@
             </td>
             <td>
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
-                @if ((await UserManager.GetUserAsync(User)) == item.Group.Owner)
+                @if (Model.User2 == item.Group.Owner)
                 {
                     <span> | </span>
                     <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a><span> | </span>
                     <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                }
+                @if (Model.User2 != null)
+                {
+                <span> | </span>
+                <a asp-page="./Join" asp-route-id="@item.ID">Join</a><span> | </span>
+                <a asp-page="./Leave" asp-route-id="@item.ID">Leave</a>
                 }
             </td>
         </tr>

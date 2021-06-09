@@ -18,7 +18,7 @@ namespace GroupMeeting.Models
         [DataType(DataType.Time)]
         public DateTime Start_Time { get; set; }
         public Group Group { get; set; }
-
-        
+        [NotMapped]
+        public ICollection<MeetingUser> MeetingUsers { get; set; }
     }
 }

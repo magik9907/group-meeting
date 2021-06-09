@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupMeeting.Migrations
 {
     [DbContext(typeof(GroupMeetingContext))]
-    [Migration("20210608161201_CityChange")]
-    partial class CityChange
+    [Migration("20210609215458_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -267,6 +267,26 @@ namespace GroupMeeting.Migrations
                     b.ToTable("Meetings");
                 });
 
+            modelBuilder.Entity("GroupMeeting.Models.MeetingUser", b =>
+                {
+                    b.Property<int>("MeetingID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("MeetingID", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("MeetingUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -499,6 +519,25 @@ namespace GroupMeeting.Migrations
                         .HasForeignKey("Group_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GroupMeeting.Models.MeetingUser", b =>
+                {
+                    b.HasOne("GroupMeeting.Models.Meeting", "Meeting")
+                        .WithMany()
+                        .HasForeignKey("MeetingID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)
+                        .WithMany("MeetingUsers")
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
