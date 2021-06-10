@@ -19,12 +19,12 @@ namespace GroupMeeting
     {
         public class SearchGroup
         {
-            [Required]
-            public string Name { get; set; }
+            public string? Name { get; set; }
             public int? CategoryId { get; set; }
+            public string? City { get; set; }
         }
 
-        private readonly GroupMeeting.Data.GroupMeetingContext _context;
+        private readonly GroupMeetingContext _context;
         private readonly UserManager<User> _userManager;
         [BindProperty]
         public SearchGroup GroupName { get; set; }
@@ -38,54 +38,29 @@ namespace GroupMeeting
 
         public IList<Group> Group { get; set; }
 
-        public async Task OnGetAsync(string? name, int? category)
+        public async Task OnGetAsync(string? name, int? category, string? city)
         {
             user = await _userManager.GetUserAsync(HttpContext.User);
-            if (name == null)
-            {
-                Group = await _context.Groups
-                    .Include(a => a.Owner).Include(a => a.GroupCategories).ThenInclude(a => a.Category).ToListAsync();
-            }
-            else
-            {
-                GroupName = new SearchGroup();
-                if (name != null && category != null)
-                {
-                    Group = await (from c in _context.Groups
-                                   where c.GroupCategories.Any(a => a.CategoryId == category)
-                                   && c.Name == name
-                                   select c).Include(x => x.GroupCategories).ThenInclude(x => x.Category).ToListAsync();
-                    GroupName.Name = name;
-                    GroupName.CategoryId = category;
-                }
-                if (name != null)
-                {
-                    GroupName.Name = name;
-                    Group = await _context.Groups.Include(a => a.Owner).Include(a => a.GroupCategories).ThenInclude(a => a.Category).Where(e => e.Name == name).ToListAsync();
-                }
-                else if (category != null)
-                {
-                    GroupName.CategoryId = category;
-                    Group = await (from c in _context.Groups
-                                   where c.GroupCategories.Any(a => a.CategoryId == category)
-                                   select c).Include(x => x.GroupCategories).ThenInclude(x => x.Category).ToListAsync();
-                }
-            }
-            foreach (Group group in Group)
-            {
-                group.City = _context.Cities.FirstOrDefault(c => c.ID == group.CityID);
-            }
-            CategoriesList = _context.Categories.Select(a =>
-                                                            new SelectListItem { Value = a.Id.ToString(), Text = a.Name }
-                                                        ).ToList();
+
+            Group = await _context.Groups
+                .Where(x => (x.Name == name || name == null)
+                && (x.GroupCategories.Any(x => x.CategoryId == category) || category == null)
+                && (x.City.Name == city || city == null))
+                .Include(x => x.GroupCategories)
+                .ThenInclude(x => x.Category)
+                .Include(x => x.City)
+                .ThenInclude(x => x.GroupCities)
+                //.OrderByDescending(x=>x.Data)
+                .ToListAsync();
+            
+            CategoriesList = _context.Categories
+                .Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.Name })
+                .ToList();
         }
 
         public IActionResult OnPostSearch()
         {
-            var str = "/Groups?";
-            if (GroupName.Name != "") str += ("name=" + GroupName.Name + "&");
-            if (GroupName.CategoryId > -1) str += ("Category=" + GroupName.CategoryId);
-            return Redirect(str);
+            return RedirectToPage("/Groups/Index", new { name = GroupName.Name, category = GroupName.CategoryId, city = GroupName.City });
         }
     }
 }
