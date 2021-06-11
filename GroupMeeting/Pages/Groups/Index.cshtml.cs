@@ -48,6 +48,7 @@ namespace GroupMeeting
                 && (x.City.Name == city || city == null))
                 .Include(x => x.GroupCategories)
                 .ThenInclude(x => x.Category)
+                .Include(x => x.Owner)
                 .Include(x => x.City)
                 .ThenInclude(x => x.GroupCities)
                 //.OrderByDescending(x=>x.Data)

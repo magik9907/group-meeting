@@ -4,14 +4,16 @@ using GroupMeeting.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupMeeting.Migrations
 {
     [DbContext(typeof(GroupMeetingContext))]
-    partial class GroupMeetingContextModelSnapshot : ModelSnapshot
+    [Migration("20210611092940_GroupCityFix2")]
+    partial class GroupCityFix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -523,13 +525,13 @@ namespace GroupMeeting.Migrations
                     b.HasOne("GroupMeeting.Models.Meeting", "Meeting")
                         .WithMany()
                         .HasForeignKey("MeetingID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GroupMeeting.Areas.Identity.Data.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GroupMeeting.Areas.Identity.Data.User", null)

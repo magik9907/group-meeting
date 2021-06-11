@@ -37,7 +37,7 @@ namespace GroupMeeting.Data
                 .HasKey(e => e.Id);
 
             builder.Entity<Group>()
-                .HasOne(g => g.City).WithOne().OnDelete(DeleteBehavior.Restrict);
+                .HasOne(g => g.City).WithMany().OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<User>()
                 .HasKey(e => e.Id);
@@ -54,8 +54,8 @@ namespace GroupMeeting.Data
                 e.HasKey(mu => new { mu.MeetingID, mu.UserId });
                 e.Property(ent => ent.MeetingID).ValueGeneratedNever();
                 e.Property(ent => ent.UserId).ValueGeneratedNever();
-                e.HasOne(mu => mu.Meeting).WithMany().HasForeignKey(mu => mu.MeetingID).OnDelete(DeleteBehavior.Restrict);
-                e.HasOne(mu => mu.User).WithMany().HasForeignKey(mu => mu.UserId).OnDelete(DeleteBehavior.Restrict);
+                e.HasOne(mu => mu.Meeting).WithMany().HasForeignKey(mu => mu.MeetingID);
+                e.HasOne(mu => mu.User).WithMany().HasForeignKey(mu => mu.UserId);
             });
 
             builder.Entity<GroupCity>(e =>
