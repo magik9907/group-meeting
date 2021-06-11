@@ -9,9 +9,11 @@ using GroupMeeting.Areas.Identity.Data;
 using System.Security.Claims;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Web.Http;
 
 namespace GroupMeeting.Pages.Groups
 {
+    [Authorize]
     public class JoinModel : PageModel
     {
         private readonly Data.GroupMeetingContext _context;
