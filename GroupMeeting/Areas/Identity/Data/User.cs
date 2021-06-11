@@ -19,7 +19,6 @@ namespace GroupMeeting.Areas.Identity.Data
         public IEnumerable<Category> Categories { get; set; }
         public ICollection<GroupUser> GroupUsers { get; set; }
         [MaxLength(10)]
-        public ICollection<GroupOwner> GroupOwners { get; set; }
-        public ICollection<MeetingUser> MeetingUsers { get; set; }
+          public ICollection<MeetingUser> MeetingUsers { get; set; }
     }
 }

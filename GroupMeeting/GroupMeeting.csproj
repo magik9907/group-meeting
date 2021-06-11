@@ -62,6 +62,10 @@
     <Compile Remove="Migrations\20210609194615_Init.Designer.cs" />
     <Compile Remove="Migrations\20210609215111_init.cs" />
     <Compile Remove="Migrations\20210609215111_init.Designer.cs" />
+    <Compile Remove="Migrations\20210611092334_GroupCityFix.cs" />
+    <Compile Remove="Migrations\20210611092334_GroupCityFix.Designer.cs" />
+    <Compile Remove="Migrations\20210611092940_GroupCityFix2.cs" />
+    <Compile Remove="Migrations\20210611092940_GroupCityFix2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

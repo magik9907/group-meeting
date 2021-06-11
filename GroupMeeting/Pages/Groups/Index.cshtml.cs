@@ -50,8 +50,7 @@ namespace GroupMeeting
                 .ThenInclude(x => x.Category)
                 .Include(x => x.Owner)
                 .Include(x => x.City)
-                .ThenInclude(x => x.GroupCities)
-                //.OrderByDescending(x=>x.Data)
+                .OrderByDescending(x=>x.CreateDate)
                 .ToListAsync();
             
             CategoriesList = _context.Categories

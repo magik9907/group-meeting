@@ -15,8 +15,6 @@ namespace GroupMeeting.Data
     public class GroupMeetingContext : IdentityDbContext<User>
     {
         public DbSet<Category> Categories { get; set; }
-        public DbSet<GroupOwner> GroupOwner { get; set; }
-        public DbSet<GroupCity> GroupCity { get; set; }
         public DbSet<GroupUser> GroupUser { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<City> Cities { get; set; }
@@ -35,9 +33,6 @@ namespace GroupMeeting.Data
 
             builder.Entity<Category>()
                 .HasKey(e => e.Id);
-
-            builder.Entity<Group>()
-                .HasOne(g => g.City).WithMany().OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<User>()
                 .HasKey(e => e.Id);
@@ -58,33 +53,22 @@ namespace GroupMeeting.Data
                 e.HasOne(mu => mu.User).WithMany().HasForeignKey(mu => mu.UserId);
             });
 
-            builder.Entity<GroupCity>(e =>
-            {
-                e.HasKey(go => new { go.GroupID, go.CityID });
-                e.HasOne(go => go.Group).WithOne().HasForeignKey<GroupCity>(go => go.GroupID);
-                e.HasOne(go => go.City).WithMany().HasForeignKey(go => go.CityID);
-            });
-
             builder.Entity<GroupUser>()
                 .HasKey(gc => new { gc.GroupID, gc.UserID });
+
             builder.Entity<GroupUser>()
                 .HasOne(x => x.Group)
                 .WithMany(g => g.GroupUsers)
                 .HasForeignKey(y => y.GroupID);
+
             builder.Entity<GroupUser>()
                 .HasOne(x => x.User)
                 .WithMany(y => y.GroupUsers)
                 .HasForeignKey(y => y.UserID);
-
-            builder.Entity<GroupOwner>(e =>
-            {
-                e.HasKey(go => new { go.GroupID, go.OwnerID });
-                e.HasOne(go => go.Group).WithOne().HasForeignKey<GroupOwner>(go => go.GroupID);
-                e.HasOne(go => go.Owner).WithMany().HasForeignKey(go => go.OwnerID);
-            }
-            );
+          
             builder.Entity<Meeting>()
                 .HasKey(x => x.ID);
+
             builder.Entity<Meeting>()
                 .HasOne(x => x.Group)
                 .WithMany(y => y.Meetings)

@@ -42,7 +42,7 @@ namespace GroupMeeting
             {
                 return NotFound();
             }
-            Group.City = _context.Cities.FirstOrDefault(c => c.ID == Group.CityID);
+          //  Group.City = _context.Cities.FirstOrDefault(c => c.ID == Group.CityID);
             return Page();
         }
     }

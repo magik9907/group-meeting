@@ -16,12 +16,12 @@ namespace GroupMeeting.Models
         public string Name { get; set; }
         [MaxLength(1000)]
         public string Description { get; set; }
-        public int CityID { get; set; }
         public City City { get; set; }
         public ICollection<GroupUser> GroupUsers { get; set; }
         public string OwnerID { get; set; }
         public User Owner { get; set; }
         public IList<GroupCategory> GroupCategories { get; set; }
         public ICollection<Meeting> Meetings { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

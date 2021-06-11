@@ -9,9 +9,11 @@ using GroupMeeting.Areas.Identity.Data;
 using System.Security.Claims;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Web.Http;
 
 namespace GroupMeeting.Pages.Groups
 {
+    [Authorize]
     public class LeaveModel : PageModel
     {
         private readonly Data.GroupMeetingContext _context;
@@ -62,7 +64,7 @@ namespace GroupMeeting.Pages.Groups
             ClaimsPrincipal currentUser = this.User;
             var user = await _userManager.GetUserAsync(currentUser);
 
-            var groupUser = Group.GroupUsers.FirstOrDefault(x => x.User == user);
+               var groupUser = Group.GroupUsers.FirstOrDefault(x => x.User == user);
 
             if (user != null && groupUser != null)
             {
