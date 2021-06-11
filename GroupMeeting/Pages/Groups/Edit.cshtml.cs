@@ -79,7 +79,7 @@ namespace GroupMeeting
                 return Page();
             }
             var groupCity = await _context.GroupCity.FirstAsync(gc => gc.CityID == Group.CityID && gc.GroupID == Group.ID);
-            var city = _context.Cities.FirstOrDefault(a => a.Name == Group.City.Name);
+            var city = _context.Cities.FirstOrDefault(a => a.Name.ToLower() == Group.City.Name.ToLower());
             if (city == null)
             {
                 city = Group.City;

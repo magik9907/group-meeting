@@ -45,7 +45,7 @@ namespace GroupMeeting
             {
                 return Page();
             }
-            var city = _context.Cities.FirstOrDefault(c => c.Name == City.Name);
+            var city = _context.Cities.FirstOrDefault(c => c.Name.ToLower() == City.Name.ToLower());
             if (city == null)
             {
                 city = new City
