@@ -27,11 +27,13 @@ namespace GroupMeeting.Pages.Meetings
             _userManager = userManager;
         }
 
-        public IList<Meeting> Meeting { get;set; }
+        public IList<Meeting> Meeting { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? id)
         {
-            Meeting = await _context.Meetings.Include(x => x.Group).ToListAsync();
+            Meeting = await _context.Meetings
+                .Where(x => x.Group_id == id || id == null)
+                .Include(x => x.Group).ToListAsync();
             ClaimsPrincipal currentUser = this.User;
             User2 = await _userManager.GetUserAsync(currentUser);
         }

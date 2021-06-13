@@ -10,18 +10,18 @@ using Newtonsoft.Json;
 namespace GroupMeeting.Controller
 {
 
-    [Microsoft.AspNetCore.Authorization.Authorize]
-    [Route("api/ticket")]
     [ApiController]
+  //  [Microsoft.AspNetCore.Authorization.Authorize]
+    [Route("api/ticket")]
     public class TicketController : ControllerBase
     {
-      
-
         // GET api/ticket/[id]
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return JsonConvert.SerializeObject(new Ticket()
+            if (!User.Identity.IsAuthenticated)
+                return "403";
+                return JsonConvert.SerializeObject(new Ticket()
             {
                 Name = "John Johnson",
                 Date = "24.05.2020 14:40",

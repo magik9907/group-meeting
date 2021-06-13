@@ -9,7 +9,8 @@ using GroupMeeting.Data;
 using GroupMeeting.Models;
 using Microsoft.AspNetCore.Identity;
 using GroupMeeting.Areas.Identity.Data;
-using System.Web.Http;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace GroupMeeting
 {

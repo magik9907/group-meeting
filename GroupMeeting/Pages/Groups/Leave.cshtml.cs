@@ -9,7 +9,7 @@ using GroupMeeting.Areas.Identity.Data;
 using System.Security.Claims;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Web.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GroupMeeting.Pages.Groups
 {

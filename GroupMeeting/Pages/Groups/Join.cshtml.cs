@@ -9,7 +9,8 @@ using GroupMeeting.Areas.Identity.Data;
 using System.Security.Claims;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Web.Http;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace GroupMeeting.Pages.Groups
 {
@@ -43,6 +44,8 @@ namespace GroupMeeting.Pages.Groups
             {
                 return NotFound();
             }
+            if (Group.OwnerID == _userManager.GetUserId(HttpContext.User))
+                return RedirectToPage("./Index");
 
             return Page();
         }
@@ -54,9 +57,9 @@ namespace GroupMeeting.Pages.Groups
                 return NotFound();
             }
 
-            Group = await _context.Groups.Include(g => g.GroupUsers).ThenInclude(g=>g.User).FirstOrDefaultAsync(g=>g.ID == id);
+            Group = await _context.Groups.Include(g => g.GroupUsers).ThenInclude(g => g.User).FirstOrDefaultAsync(g => g.ID == id);
 
-            if(Group == null)
+            if (Group == null)
             {
                 return NotFound();
             }

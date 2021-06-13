@@ -9,7 +9,7 @@ using GroupMeeting.Data;
 using GroupMeeting.Models;
 using Microsoft.AspNetCore.Identity;
 using GroupMeeting.Areas.Identity.Data;
-using System.Web.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GroupMeeting
 {
@@ -29,8 +29,6 @@ namespace GroupMeeting
             var user = _userManager.GetUserId(HttpContext.User);
             if (_context.Groups.Count(e => e.OwnerID == user) > 10)
                 return RedirectToPage("/Groups/TooManyGroups");
-            if (user == null)
-                return RedirectToPage("/Identity/Account/Login");
             return Page();
         }
 

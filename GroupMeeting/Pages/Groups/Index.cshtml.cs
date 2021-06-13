@@ -29,6 +29,7 @@ namespace GroupMeeting
         [BindProperty]
         public SearchGroup GroupName { get; set; }
         public User user;
+        public bool QueryValue;
         public List<SelectListItem> CategoriesList { get; set; }
         public IndexModel(GroupMeetingContext context, UserManager<User> userManager)
         {
@@ -38,21 +39,31 @@ namespace GroupMeeting
 
         public IList<Group> Group { get; set; }
 
-        public async Task OnGetAsync(string? name, int? category, string? city)
+        public async Task OnGetAsync(string? name, int? category, string? city, bool? allGroups)
         {
+            string? userId = null;
+            QueryValue = (allGroups != null) ? (bool)allGroups : false;
             user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user != null)
+                userId = await _userManager.GetUserIdAsync(user);
 
             Group = await _context.Groups
-                .Where(x => (x.Name == name || name == null)
+                .Where(x => (
+                (x.OwnerID == userId || x.GroupUsers.Any(x => x.UserID == userId))
+                || user == null
+                || QueryValue)
+                && (x.Name == name || name == null)
                 && (x.GroupCategories.Any(x => x.CategoryId == category) || category == null)
                 && (x.City.Name == city || city == null))
                 .Include(x => x.GroupCategories)
                 .ThenInclude(x => x.Category)
                 .Include(x => x.Owner)
                 .Include(x => x.City)
-                .OrderByDescending(x=>x.CreateDate)
+                .Include(x => x.GroupUsers)
+                .OrderByDescending(x => x.CreateDate)
                 .ToListAsync();
-            
+
+
             CategoriesList = _context.Categories
                 .Select(a => new SelectListItem { Value = a.Id.ToString(), Text = a.Name })
                 .ToList();
@@ -60,7 +71,7 @@ namespace GroupMeeting
 
         public IActionResult OnPostSearch()
         {
-            return RedirectToPage("/Groups/Index", new { name = GroupName.Name, category = GroupName.CategoryId, city = GroupName.City });
+            return RedirectToPage("/Groups/Index", new { name = GroupName.Name, category = GroupName.CategoryId, city = GroupName.City, allGroups = QueryValue });
         }
     }
 }

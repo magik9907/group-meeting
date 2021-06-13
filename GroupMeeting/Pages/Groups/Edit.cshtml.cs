@@ -12,7 +12,8 @@ using System.ComponentModel.DataAnnotations;
 using GroupMeeting.Areas.GroupCategories.Models;
 using Microsoft.AspNetCore.Identity;
 using GroupMeeting.Areas.Identity.Data;
-using System.Web.Http;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace GroupMeeting
 {

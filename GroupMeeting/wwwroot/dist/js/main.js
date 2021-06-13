@@ -194,13 +194,22 @@ class PDFTicket {
 
 }
 
-document.querySelector('#GeneratePdfButton').addEventListener('click', event => {
+var pdfButton = document.querySelector('#GeneratePdfButton');
+if (pdfButton) pdfButton.addEventListener('click', event => {
   const id = event.target.dataset['id'];
 
   try {
-    fetch(`${location.protocol}//${location.host}/api/ticket/${id}`).then(response => response.json()).then(data => {
-      const pdf = new PDFTicket(data);
-      pdf.Create();
+    fetch(`${location.protocol}//${location.host}/api/ticket/${id}`).then(response => {
+      try {
+        return response.json();
+      } catch (e) {
+        return response.text();
+      }
+    }).then(data => {
+      if (data == '403') window.location.href = `${location.protocol}//${location.host}/Identity/Account/Login`;else {
+        const pdf = new PDFTicket(data);
+        pdf.Create();
+      }
     }).catch(e => console.log(e));
   } catch (e) {
     console.log(e);

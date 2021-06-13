@@ -1,4 +1,5 @@
-﻿@page 
+﻿@page
+
 
 @using Microsoft.AspNetCore.Identity
 @using GroupMeeting.Areas.Identity.Data;
@@ -8,10 +9,21 @@
 @model GroupMeeting.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista Group";
+    bool isLoggin = User.Identity.IsAuthenticated;
 }
 
-<h1>Index</h1>
+@if (!Model.QueryValue && Model.user != null)
+{
+    <h1>Lista grup do których dołączyłeś</h1>
+}
+else
+{
+    <h1>Lista wszystkich grup</h1>
+}
+<a asp-page="Index">Grupy w których jesteś</a>
+<br />
+<a asp-page="Index" asp-route-allGroups="true">Lista grup dostępnych</a>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -31,7 +43,7 @@
         <label asp-for="GroupName.City" class="control-label"></label>
         <input asp-for="GroupName.City" class="form-control" />
         <span asp-validation-for="GroupName.City" class="text-danger"></span>
-     </div>
+    </div>
     <button type-"submit">Szukaj</button>
 </form>
 <table class="table">
@@ -78,20 +90,30 @@
                     }
                 </td>
                 <td>
-                    @if (item.Owner == Model.user)
+                    @if (isLoggin)
                     {
-                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> <a>|</a>
-                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> <a>|</a>
-                    }
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-page="./Join" asp-route-id="@item.ID">Join</a> |
-                    <a asp-page="./Leave" asp-route-id="@item.ID">Leave</a>
+                        @if (item.Owner == Model.user)
+                        {
+                            <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> <span>|</span>
 
-                    @if ((await UserManager.GetUserAsync(User)) == item.Owner)
-                    {
-                        <span> | </span>
-                        <a asp-page="../Meetings/Create" asp-route-id="@item.ID"> Create Meeting</a>
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> <span>|</span>
+
+                            <a asp-page="../Meetings/Create" asp-route-id="@item.ID"> Create Meeting</a> <span>|</span>
+                        }
+                        else
+                        {
+                            @if (!item.GroupUsers.Any(x => x.UserID == Model.user.Id))
+                            {
+                                <a asp-page="./Join" asp-route-id="@item.ID">Join</a> <span>|</span>
+                            }
+                            else
+                            {
+                                <a asp-page="./Leave" asp-route-id="@item.ID">Leave</a> <span>|</span>
+                            }
+                        }
+                        <a asp-page="../Meetings/Index" asp-route-id="@item.ID">Meetings</a> <span>|</span>
                     }
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
                 </td>
 
             </tr>
