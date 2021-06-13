@@ -4,14 +4,16 @@ using GroupMeeting.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupMeeting.Migrations
 {
     [DbContext(typeof(GroupMeetingContext))]
-    partial class GroupMeetingContextModelSnapshot : ModelSnapshot
+    [Migration("20210613181342_UpdateMeetingModel")]
+    partial class UpdateMeetingModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,8 +223,8 @@ namespace GroupMeeting.Migrations
                     b.Property<DateTime>("Start_Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("Start_Time")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("Start_Time")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserCounter")
                         .HasColumnType("int");

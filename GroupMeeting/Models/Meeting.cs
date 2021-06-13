@@ -13,10 +13,17 @@ namespace GroupMeeting.Models
         [ForeignKey("Group")]
         public int Group_id { get; set; }
         public string Name { get; set; }
+        [DataType(DataType.Text)]
+        [MaxLength(1000)]
+        public string Description { get; set; }
         [DataType(DataType.Date)]
         public DateTime Start_Date { get; set; }
         [DataType(DataType.Time)]
-        public DateTime Start_Time { get; set; }
+        public TimeSpan Start_Time { get; set; }
+        public bool IsOnline { get; set; }
+        public string Localisation { get; set; }
+        public int UserMaxLimit { get; set; }
+        public int UserCounter { get; set; }
         public Group Group { get; set; }
         [NotMapped]
         public ICollection<MeetingUser> MeetingUsers { get; set; }

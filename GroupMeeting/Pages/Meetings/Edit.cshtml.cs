@@ -31,7 +31,7 @@ namespace GroupMeeting.Pages.Meetings
                 return NotFound();
             }
 
-            Meeting = await _context.Meetings.FirstOrDefaultAsync(m => m.ID == id);
+            Meeting = await _context.Meetings.Include(x=>x.MeetingUsers).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Meeting == null)
             {

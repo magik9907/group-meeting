@@ -41,6 +41,7 @@ namespace GroupMeeting
 
         public async Task OnGetAsync(string? name, int? category, string? city, bool? allGroups)
         {
+            GroupName = new SearchGroup() { Name = name, CategoryId = category, City = city };
             string? userId = null;
             QueryValue = (allGroups != null) ? (bool)allGroups : false;
             user = await _userManager.GetUserAsync(HttpContext.User);

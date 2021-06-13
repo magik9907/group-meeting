@@ -29,35 +29,34 @@
     <tbody>
         @foreach (var item in Model.Meeting)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Group.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Start_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Start_Time)
-            </td>
-            <td>
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
-                @if (Model.User2 == item.Group.Owner)
-                {
-                    <span> | </span>
-                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a><span> | </span>
-                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-                }
-                @if (Model.User2 != null)
-                {
-                <span> | </span>
-                <a asp-page="./Join" asp-route-id="@item.ID">Join</a><span> | </span>
-                <a asp-page="./Leave" asp-route-id="@item.ID">Leave</a>
-                }
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start_Time)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
+                    @if (Model.User2 == item.Group.Owner)
+                    {
+                        <span> | </span>
+                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a><span> | </span>
+                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    }
+                    else if (Model.User2 != null && (item.MeetingUsers == null || !item.MeetingUsers.Any(x => Model.User2.Id == x.UserId)))
+                    {
+                        <span> | </span>
+                        <a asp-page="./Join" asp-route-id="@item.ID">Join</a>
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 </table>

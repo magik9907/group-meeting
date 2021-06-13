@@ -25,6 +25,8 @@ namespace GroupMeeting.Pages.Meetings
         {
             Meeting = new Meeting();
             Meeting.Group_id = id;
+            Meeting.Start_Date = DateTime.Now;
+            Meeting.Start_Time = DateTime.Now.TimeOfDay;
             return Page();
         }
 
@@ -39,7 +41,10 @@ namespace GroupMeeting.Pages.Meetings
             {
                 return Page();
             }
-
+            DateTime time = Meeting.Start_Date;
+            time = time.Add(Meeting.Start_Time);
+            if (DateTime.Compare(time, DateTime.Now) < 1)
+                return Page();
             _context.Meetings.Add(Meeting);
             await _context.SaveChangesAsync();
 

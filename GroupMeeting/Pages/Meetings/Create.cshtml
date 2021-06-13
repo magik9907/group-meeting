@@ -30,7 +30,27 @@
                 <input asp-for="Meeting.Start_Time" class="form-control" />
                 <span asp-validation-for="Meeting.Start_Time" class="text-danger"></span>
             </div>
-            
+            <div class="form-group">
+                <label asp-for="Meeting.IsOnline" class="control-label"></label>
+                <input asp-for="Meeting.IsOnline" class="form-control" />
+                <span asp-validation-for="Meeting.IsOnline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meeting.Localisation" class="control-label"></label>
+                <input asp-for="Meeting.Localisation" class="form-control" />
+                <span asp-validation-for="Meeting.Localisation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meeting.Description" class="control-label"></label>
+                <input asp-for="Meeting.Description" class="form-control" />
+                <span asp-validation-for="Meeting.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meeting.UserMaxLimit" class="control-label"></label>
+                <input asp-for="Meeting.UserMaxLimit" class="form-control" />
+                <span asp-validation-for="Meeting.UserMaxLimit" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -12,13 +12,11 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Meeting.Name" class="control-label"></label>
                 <input asp-for="Meeting.Name" class="form-control" />
                 <span asp-validation-for="Meeting.Name" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Meeting.Group_id" />
             <div class="form-group">
                 <label asp-for="Meeting.Start_Date" class="control-label"></label>
                 <input asp-for="Meeting.Start_Date" class="form-control" />
@@ -28,6 +26,26 @@
                 <label asp-for="Meeting.Start_Time" class="control-label"></label>
                 <input asp-for="Meeting.Start_Time" class="form-control" />
                 <span asp-validation-for="Meeting.Start_Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meeting.IsOnline" class="control-label"></label>
+                <input asp-for="Meeting.IsOnline" class="form-control" />
+                <span asp-validation-for="Meeting.IsOnline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meeting.Localisation" class="control-label"></label>
+                <input asp-for="Meeting.Localisation" class="form-control" />
+                <span asp-validation-for="Meeting.Localisation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meeting.Description" class="control-label"></label>
+                <input asp-for="Meeting.Description" class="form-control" />
+                <span asp-validation-for="Meeting.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meeting.UserMaxLimit" class="control-label"></label>
+                <input asp-for="Meeting.UserMaxLimit" class="form-control" />
+                <span asp-validation-for="Meeting.UserMaxLimit" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Meeting.ID" />
             <div class="form-group">
