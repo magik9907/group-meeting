@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 using GroupMeeting.Models;
 using GroupMeeting.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GroupMeeting.Pages.Meetings
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly GroupMeetingContext _context;
@@ -31,7 +33,7 @@ namespace GroupMeeting.Pages.Meetings
                 return NotFound();
             }
 
-            Meeting = await _context.Meetings.Include(x=>x.MeetingUsers).FirstOrDefaultAsync(m => m.ID == id);
+            Meeting = await _context.Meetings.FirstOrDefaultAsync(m => m.ID == id);
 
             if (Meeting == null)
             {

@@ -28,6 +28,12 @@
             @Html.DisplayFor(model => model.Meeting.Name)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Description)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Meeting.Start_Date)
         </dt>
         <dd class="col-sm-10">
@@ -38,6 +44,27 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Meeting.Start_Time)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.IsOnline)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.IsOnline)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.Localisation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meeting.Localisation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meeting.MeetingUsers)
+        </dt>
+        <dd>
+            @foreach (var item in Model.Meeting.MeetingUsers)
+            {
+                @item.User.UserName <span>,</Span>
+            }
         </dd>
     </dl>
 </div>

@@ -66,6 +66,10 @@
     <Compile Remove="Migrations\20210611092334_GroupCityFix.Designer.cs" />
     <Compile Remove="Migrations\20210611092940_GroupCityFix2.cs" />
     <Compile Remove="Migrations\20210611092940_GroupCityFix2.Designer.cs" />
+    <Compile Remove="Migrations\20210614173114_MeetingUser.cs" />
+    <Compile Remove="Migrations\20210614173114_MeetingUser.Designer.cs" />
+    <Compile Remove="Migrations\20210614174428_MeetingUser.cs" />
+    <Compile Remove="Migrations\20210614174428_MeetingUser.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

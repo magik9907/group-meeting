@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 using GroupMeeting.Models;
 using GroupMeeting.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GroupMeeting.Pages.Meetings
 {
-
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly GroupMeetingContext _context;

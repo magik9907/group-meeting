@@ -25,7 +25,6 @@ namespace GroupMeeting.Models
         public int UserMaxLimit { get; set; }
         public int UserCounter { get; set; }
         public Group Group { get; set; }
-        [NotMapped]
         public ICollection<MeetingUser> MeetingUsers { get; set; }
     }
 }

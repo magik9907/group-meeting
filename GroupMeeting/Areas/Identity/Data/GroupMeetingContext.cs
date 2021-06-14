@@ -44,14 +44,7 @@ namespace GroupMeeting.Data
                 .WithMany(g => g.Categories)
                 .HasForeignKey(f => f.UserId);
 
-            builder.Entity<MeetingUser>(e =>
-            {
-                e.HasKey(mu => new { mu.MeetingID, mu.UserId });
-                e.Property(ent => ent.MeetingID).ValueGeneratedNever();
-                e.Property(ent => ent.UserId).ValueGeneratedNever();
-                e.HasOne(mu => mu.Meeting).WithMany().HasForeignKey(mu => mu.MeetingID);
-                e.HasOne(mu => mu.User).WithMany().HasForeignKey(mu => mu.UserId);
-            });
+            builder.Entity<MeetingUser>().HasKey(mu=>new { mu.UserId, mu.MeetingID});
 
             builder.Entity<GroupUser>()
                 .HasKey(gc => new { gc.GroupID, gc.UserID });
