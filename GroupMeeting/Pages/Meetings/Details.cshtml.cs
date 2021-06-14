@@ -28,12 +28,7 @@ namespace GroupMeeting.Pages.Meetings
             {
                 return NotFound();
             }
-            /*
-                        Meeting = await _context.Meetings
-                            .Include(x => x.MeetingUsers).ThenInclude(x => x.User)
-                            .Where(x => x.ID == id)
-                            .FirstOrDefaultAsync();*/
-
+           
             Meeting = await _context.Meetings
                 .Where(x => x.ID == id)
                 .Include(x => x.Group)

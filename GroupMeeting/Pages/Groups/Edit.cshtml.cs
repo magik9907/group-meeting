@@ -81,22 +81,13 @@ namespace GroupMeeting
                 await OnGetAsync(Group.ID);
                 return Page();
             }
- //           var groupCity = await _context.GroupCity.FirstAsync(gc => gc.CityID == Group.CityID && gc.GroupID == Group.ID);
-            var city = _context.Cities.FirstOrDefault(a => a.Name.ToLower() == Group.City.Name.ToLower());
+         var city = _context.Cities.FirstOrDefault(a => a.Name.ToLower() == Group.City.Name.ToLower());
             if (city == null)
             {
                 city = Group.City;
                 _context.Cities.Add(city);
             }
             Group.City = city;
-    //       Group.CityID = city.ID;
-      //      _context.GroupCity.Remove(groupCity);
-      //      groupCity = new GroupCity
-       //     {
-        //        CityID = Group.CityID,
-        //        GroupID = Group.ID
-         //   };
-         //   _context.GroupCity.Add(groupCity);
             _context.Attach(Group).State = EntityState.Modified;
             try
             {

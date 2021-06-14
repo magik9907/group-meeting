@@ -54,13 +54,17 @@ namespace GroupMeeting.Pages.Meetings
             {
                 return NotFound();
             }
-
-            var meetingUser = await _context.MeetingUser.FirstOrDefaultAsync(mu => mu.MeetingID == Meeting.ID && mu.UserId == User2.Id);
-
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var meetingUser = await _context.MeetingUser.FirstOrDefaultAsync(mu => mu.MeetingID == Meeting.ID && mu.UserId == userId);
+            var meeting = _context.Meetings.FirstOrDefault(x=>x.ID == id);
             if (meetingUser != null)
             {
-                _context.MeetingUser.Remove(new MeetingUser() { Meeting = Meeting, User = User2 });
+                _context.MeetingUser.Remove(meetingUser);
                 await _context.SaveChangesAsync();
+                meeting.UserCounter--;
+                _context.Meetings.Update(meeting);
+                await _context.SaveChangesAsync();
+               ;
             }
 
             return RedirectToPage("./Index");

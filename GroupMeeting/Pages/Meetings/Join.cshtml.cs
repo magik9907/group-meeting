@@ -56,12 +56,17 @@ namespace GroupMeeting.Pages.Meetings
                 return NotFound();
             }
             User2 = await _userManager.GetUserAsync(HttpContext.User);
-            var meetingUser = await _context.MeetingUser.FirstOrDefaultAsync(mu => mu.MeetingID == Meeting.ID && mu.UserId == User2.Id);
 
-            if (meetingUser == null)
+            var meeting = _context.Meetings
+                .Where(x => x.ID == id && x.UserCounter < x.UserMaxLimit && !x.MeetingUsers.Any(x => x.MeetingID == id && x.UserId == User2.Id))
+                .FirstOrDefault();
+
+
+            if (meeting != null)
             {
-                meetingUser = new MeetingUser() { MeetingID = Meeting.ID, UserId = User2.Id };
-                this._context.MeetingUser.Add(meetingUser);
+                meeting.UserCounter++;
+                _context.Meetings.Update(meeting);
+                this._context.MeetingUser.Add(new MeetingUser() {UserId=User2.Id, MeetingID=meeting.ID });
                 await this._context.SaveChangesAsync();
             }
 
