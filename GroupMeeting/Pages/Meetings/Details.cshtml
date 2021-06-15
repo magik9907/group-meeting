@@ -16,52 +16,52 @@
     <h4>Meeting</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             Group name
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Meeting.Group.Name)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Meeting.Name)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Meeting.Name)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Meeting.Description)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Meeting.Description)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Meeting.Start_Date)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Meeting.Start_Date)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Meeting.Start_Time)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Meeting.Start_Time)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Meeting.IsOnline)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Meeting.IsOnline)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Meeting.Localisation)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Meeting.Localisation)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Meeting.MeetingUsers)
         </dt>
-        <dd>
+        <dd class="col-sm-9">
             @foreach (var item in Model.Meeting.MeetingUsers)
             {
                 @item.User.UserName <span>,</span>
@@ -70,10 +70,10 @@
 
         @if (Model.Meeting.MeetingUsers.Any(x => x.UserId == user))
         {
-            <dt class="col-sm-2">
+            <dt class="col-sm-3">
                 Ticket
             </dt>
-            <dd>
+            <dd class="col-sm-9">
                 <button data-id="@Model.Meeting.ID" id="GeneratePdfButton">Ticket</button>
             </dd>
         }
