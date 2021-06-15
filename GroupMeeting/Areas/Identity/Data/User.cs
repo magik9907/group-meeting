@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using GroupMeeting.Areas.GroupCategories.Models;
 using GroupMeeting.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GroupMeeting.Areas.Identity.Data
 {
@@ -20,5 +21,7 @@ namespace GroupMeeting.Areas.Identity.Data
         public ICollection<GroupUser> GroupUsers { get; set; }
         [MaxLength(10)]
           public ICollection<MeetingUser> MeetingUsers { get; set; }
+        [NotMapped]
+        public string FullName { get => this.FirstName +" "+ this.Surname; }
     }
 }

@@ -7,6 +7,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    var user = UserManager.GetUserId(HttpContext.User);
 }
 
 <h1>Details</h1>
@@ -63,9 +64,19 @@
         <dd>
             @foreach (var item in Model.Meeting.MeetingUsers)
             {
-                @item.User.UserName <span>,</Span>
+                @item.User.UserName <span>,</span>
             }
         </dd>
+
+        @if (Model.Meeting.MeetingUsers.Any(x => x.UserId == user))
+        {
+            <dt class="col-sm-2">
+                Ticket
+            </dt>
+            <dd>
+                <button data-id="@Model.Meeting.ID" id="GeneratePdfButton">Ticket</button>
+            </dd>
+        }
     </dl>
 </div>
 <div>

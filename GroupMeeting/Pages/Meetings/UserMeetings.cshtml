@@ -54,10 +54,11 @@
                         <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a><span> | </span>
                         <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
                     }
-                    @if (await _userManager.GetUserAsync(HttpContext.User) != null)
+                    else if (await _userManager.GetUserAsync(HttpContext.User) != null)
                     {
                         <span> | </span>
                         <a asp-page="./Leave" asp-route-id="@item.ID">Leave</a>
+                        <span> | </span><button data-id="@item.ID" id="GeneratePdfButton">Ticket</button>
                     }
                 </td>
             </tr>

@@ -51,7 +51,7 @@ class PDFTicket {
       if (err) throw err;
       s = string;
     });
-    this.doc.addImage(s, this.width / 2 - 50, this.height - 150, 100, 100);
+    this.doc.addImage(s, this.width - 260, this.height - 180, 100, 100);
   }
 
   Create() {
@@ -83,6 +83,26 @@ class PDFTicket {
     this.Text(`w dniu: ${this.Data.Date}`, 25, centerHorizontal, 400);
 
     this.QRCode();
+    this.Text(`ID: ${this.Data.Id}`, 25, this.width - 200, this.height - 50);
+    if (this.Data.isOnline == false)
+      this.Text(
+        `Adres: ${this.Data.Address ?? ' sdfsdsfsddscfdgdsfgsdgsdfgsdfgf'}`,
+        25,
+        20,
+        this.height - 100,
+        { align: 'left', maxWidth: this.width * 0.5 }
+      );
+    else if (this.Data.Address != '')
+      this.doc.textWithLink(`Link to meetup`, 25, this.height - 100, {
+        url: this.Data.Address ?? 'https://www.google.pl',
+      });
+    this.Text(
+      `Grupa: ${this.Data.GroupName ?? ''}`,
+      25,
+      20,
+      this.height - 150,
+      { align: 'left', maxWidth: this.width * 0.5 }
+    );
 
     this.doc.output('dataurlnewwindow', { filename: 'Ticket' });
   }
@@ -103,7 +123,10 @@ if (pdfButton)
         .then((data) => {
           if (data == '403')
             window.location.href = `${location.protocol}//${location.host}/Identity/Account/Login`;
-          else {
+          else if (data == '404') {
+            prompt('Not found');
+            window.location.href = `${location.protocol}//${location.host}/Meetings/UserMeetings`;
+          } else {
             const pdf = new PDFTicket(data);
             pdf.Create();
           }
