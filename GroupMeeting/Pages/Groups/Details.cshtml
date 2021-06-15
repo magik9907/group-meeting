@@ -41,7 +41,7 @@
         <dd class="col-sm-10">
             @foreach (var item in Model.Group.GroupCategories)
             {
-            <span>@item.Category.Name , </span>
+                <span>@item.Category.Name , </span>
             }
         </dd>
         <dt class="col-sm-2">
@@ -62,3 +62,41 @@
         <a asp-page="./Edit" asp-route-id="@Model.Group.ID">Edit</a> <a>|</a>}
     <a asp-page="./Index">Back to List</a>
 </div>
+@if (Model.Meetings != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa spotkania
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Meetings[0].Start_Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Meetings[0].Start_Time)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Meetings)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Start_Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Start_Time)
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

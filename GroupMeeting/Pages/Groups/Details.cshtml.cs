@@ -21,7 +21,7 @@ namespace GroupMeeting
             _context = context;
             _userManager = userManager;
         }
-
+        public List<Meeting> Meetings { get; set; }
         public Group Group { get; set; }
         public string userID;
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -43,6 +43,7 @@ namespace GroupMeeting
             {
                 return NotFound();
             }
+            Meetings = await _context.Meetings.Where(x => x.Group == Group).ToListAsync();
           //  Group.City = _context.Cities.FirstOrDefault(c => c.ID == Group.CityID);
             return Page();
         }

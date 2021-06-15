@@ -56,9 +56,19 @@ namespace GroupMeeting.Pages.Meetings
                 return NotFound();
             }
             User2 = await _userManager.GetUserAsync(HttpContext.User);
+            if (_context.Meetings
+                .Where(x => x.ID == id && x.Group.GroupUsers.Any(a => a.UserID == User2.Id))
+                .FirstOrDefault() == null)
+            {
+                    ModelState.AddModelError(string.Empty, "You are not in Group");
+                return Page();
+            }
 
             var meeting = _context.Meetings
-                .Where(x => x.ID == id && x.UserCounter < x.UserMaxLimit && !x.MeetingUsers.Any(x => x.MeetingID == id && x.UserId == User2.Id))
+                .Where(x => x.ID == id
+                && x.UserCounter < x.UserMaxLimit
+                && !x.MeetingUsers.Any(x => x.MeetingID == id
+                && x.UserId == User2.Id))
                 .FirstOrDefault();
 
 
@@ -66,7 +76,7 @@ namespace GroupMeeting.Pages.Meetings
             {
                 meeting.UserCounter++;
                 _context.Meetings.Update(meeting);
-                this._context.MeetingUser.Add(new MeetingUser() {UserId=User2.Id, MeetingID=meeting.ID });
+                this._context.MeetingUser.Add(new MeetingUser() { UserId = User2.Id, MeetingID = meeting.ID });
                 await this._context.SaveChangesAsync();
             }
 

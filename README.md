@@ -1,3 +1,19 @@
+# Uruchomienie (instrukcja dla Visual Studio 2019)
+
+1. Uruchomić plik GroupMeeting.sln
+2. Uruchomić konsole menadżera pakietów i wpisać w niej komendę:
+    EntityFrameworkCore\Update-Database
+  lub z interfejsu wiersza poleceń programu .NET Core
+    dotnet ef database update 
+3. Uruchomić program z debugowanie (F5) lub bez debugowania (Ctrl + F5) w trybie deweloperskim.
+
+## Biblioteki
+  jsPDF (2.3.1) - biblioteka do javascript-u pozwalająca tworzyć pliki PDF, wykorzystana w generowaniu biletów na spotkania;
+
+  EntityFrameworkCore (3.1.15) - biblioteka dostępu do danych wykorzystywana do zarządzania bazą danych;
+
+  Identity (2.2.3) - biblioteka zawierająca API do autentykacji i authoryzacji w programie i zarządzania użytkownikami.
+
 # group-meeting
 
 .Net project
