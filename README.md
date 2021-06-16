@@ -5,15 +5,18 @@
     EntityFrameworkCore\Update-Database
   lub z interfejsu wiersza poleceń programu .NET Core
     dotnet ef database update 
-3. Uruchomić program z debugowanie (F5) lub bez debugowania (Ctrl + F5) w trybie deweloperskim.
+3. Rozpakować plik 84b3e03d-2f74-4ce4-9478-afa474e0259f.zip w ścieżce <username>\AppData\Roaming\Microsoft\UserSecrets
+4. Uruchomić program z debugowaniem (F5) lub bez debugowania (Ctrl + F5) w trybie deweloperskim.
 
 ## Biblioteki
   jsPDF (2.3.1) - biblioteka do javascript-u pozwalająca tworzyć pliki PDF, wykorzystana w generowaniu biletów na spotkania;
 
   EntityFrameworkCore (3.1.15) - biblioteka dostępu do danych wykorzystywana do zarządzania bazą danych;
 
-  Identity (2.2.3) - biblioteka zawierająca API do autentykacji i authoryzacji w programie i zarządzania użytkownikami.
+  Identity (2.2.3) - biblioteka zawierająca API do autentykacji i authoryzacji w programie i zarządzania użytkownikami;
 
+  SendGrid (9.23.1) - biblioteka umożliwiająca wysyłanie wiadomości e-mail.
+  
 # group-meeting
 
 .Net project
