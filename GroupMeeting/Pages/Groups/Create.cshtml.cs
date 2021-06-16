@@ -27,7 +27,7 @@ namespace GroupMeeting
         public IActionResult OnGet()
         {
             var user = _userManager.GetUserId(HttpContext.User);
-            if (_context.Groups.Count(e => e.OwnerID == user) > 10)
+            if (_context.Groups.Count(e => e.OwnerID == user) >= 10)
                 return RedirectToPage("/Groups/TooManyGroups");
             return Page();
         }

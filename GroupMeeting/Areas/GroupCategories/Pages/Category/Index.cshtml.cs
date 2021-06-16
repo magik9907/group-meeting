@@ -42,6 +42,10 @@ namespace GroupMeeting.Areas.GroupCategories.Pages.Category
 
         public async Task<IActionResult> OnPostCreateAsync()
         {
+            if(!ModelState.IsValid)
+            {
+                return Page();
+            }
             string name = NewCategory.Name.ToLower();
             var user = await _userManager.GetUserAsync(this.User);
             if (_context.Categories.Any(e => e.Name.ToLower() == name) || !ModelState.IsValid || user == null)

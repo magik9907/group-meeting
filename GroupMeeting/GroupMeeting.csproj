@@ -70,6 +70,8 @@
     <Compile Remove="Migrations\20210614173114_MeetingUser.Designer.cs" />
     <Compile Remove="Migrations\20210614174428_MeetingUser.cs" />
     <Compile Remove="Migrations\20210614174428_MeetingUser.Designer.cs" />
+    <Compile Remove="Migrations\20210616140409_update2.cs" />
+    <Compile Remove="Migrations\20210616140409_update2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

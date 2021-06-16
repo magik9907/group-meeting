@@ -10,7 +10,7 @@ namespace GroupMeeting.Models
     {
         [Required]
         public int ID { get; set; }
-        [MaxLength(50)]
+        [MaxLength(50), Required]
         [Display(Name="City name")]
         public string Name { get; set; }
     }

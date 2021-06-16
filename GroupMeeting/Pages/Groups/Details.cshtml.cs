@@ -36,6 +36,7 @@ namespace GroupMeeting
 
             Group = await _context.Groups
                                     .Include(a => a.Owner)
+                                    .Include(a => a.City)
                                     .Include(g=>g.GroupUsers).ThenInclude(gu=>gu.User)
                                     .Include(e=>e.GroupCategories).ThenInclude(e=>e.Category)
                                     .FirstOrDefaultAsync(m => m.ID == id);

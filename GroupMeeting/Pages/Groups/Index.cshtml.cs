@@ -43,7 +43,7 @@ namespace GroupMeeting
         {
             GroupName = new SearchGroup() { Name = name, CategoryId = category, City = city };
             string? userId = null;
-            QueryValue = (allGroups != null) ? (bool)allGroups : false;
+            QueryValue = (allGroups != null) ? (bool)allGroups : true;
             user = await _userManager.GetUserAsync(HttpContext.User);
             if (user != null)
                 userId = await _userManager.GetUserIdAsync(user);
