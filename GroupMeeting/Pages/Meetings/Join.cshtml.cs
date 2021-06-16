@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GroupMeeting.Pages.Meetings
 {
+
     public class JoinModel : PageModel
     {
         private readonly GroupMeetingContext _context;
@@ -43,6 +44,10 @@ namespace GroupMeeting.Pages.Meetings
             {
                 return NotFound();
             }
+            DateTime time = Meeting.Start_Date;
+            time = time.Add(Meeting.Start_Time);
+            if (DateTime.Compare(time, DateTime.Now) < 1)
+                return RedirectToPage("./Index");
             User2 = await _userManager.GetUserAsync(HttpContext.User);
             if (User2 == null)
                 return RedirectToPage("./Login");
