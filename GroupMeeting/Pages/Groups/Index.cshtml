@@ -12,6 +12,7 @@
     ViewData["Title"] = "Lista Group";
     bool isLoggin = User.Identity.IsAuthenticated;
 }
+<link rel="stylesheet" href="~/css/kp4.css" />
 
 @if (!Model.QueryValue && Model.user != null)
 {
@@ -86,7 +87,7 @@ else
                 <td>
                     @foreach (var cat in item.GroupCategories)
                     {
-                        <span>@Html.DisplayFor(modelItem => cat.Category.Name),</span>
+                        <span>@Html.DisplayFor(modelItem => cat.Category.Name)</span>
                     }
                 </td>
                 <td>

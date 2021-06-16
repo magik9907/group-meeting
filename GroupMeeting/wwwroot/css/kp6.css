@@ -1,0 +1,42 @@
+﻿/*Category*/
+
+input {
+    margin-left: 35px;
+}
+
+
+
+button {
+    margin-bottom: 15px;
+}
+
+    button:hover {
+        color: green;
+    }
+
+/*
+a {
+    margin-top: 15px;
+}
+    font-size: 115%;
+    a:hover {
+        font-size: 115%;
+    }
+
+label, input {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+button:hover {
+    color: rgb(51, 153, 51);
+}
+
+
+
+
+th {
+    margin-top: 25px;
+    color: rgb(102, 51, 0);
+}
+    */
