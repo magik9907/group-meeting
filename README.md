@@ -5,7 +5,7 @@
     EntityFrameworkCore\Update-Database
   lub z interfejsu wiersza poleceń programu .NET Core
     dotnet ef database update 
-3. Rozpakować plik 84b3e03d-2f74-4ce4-9478-afa474e0259f.zip w ścieżce /<username/>\AppData\Roaming\Microsoft\UserSecrets
+3. Rozpakować plik 84b3e03d-2f74-4ce4-9478-afa474e0259f.zip w ścieżce 'username'\AppData\Roaming\Microsoft\UserSecrets
 4. Uruchomić program z debugowaniem (F5) lub bez debugowania (Ctrl + F5) w trybie deweloperskim.
 
 ## Biblioteki
